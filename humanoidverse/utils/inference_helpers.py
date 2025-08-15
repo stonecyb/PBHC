@@ -7,7 +7,24 @@ def export_policy_as_jit(actor_critic, path, exported_policy_name):
         os.makedirs(path, exist_ok=True)
         path = os.path.join(path, exported_policy_name)
         model = copy.deepcopy(actor_critic.actor).to('cpu')
-        traced_script_module = torch.jit.script(model)
+        class PPOWrapper(nn.Module):
+            def __init__(self, actor):
+                """
+                model: The original PyTorch model.
+                input_keys: List of input names as keys for the input dictionary.
+                """
+                super(PPOWrapper, self).__init__()
+                self.actor = actor
+
+            def forward(self, actor_obs):
+                """
+                Dynamically creates a dictionary from the input keys and args.
+                """
+                return self.actor.act_inference(actor_obs)
+        wrapper = PPOWrapper(model)
+
+        example_input = actor_critic.get_example_obs()["actor_obs"]
+        traced_script_module = torch.jit.trace(wrapper,example_input)
         traced_script_module.save(path)
 
 def export_policy_as_onnx(inference_model, path, exported_policy_name, example_obs_dict):

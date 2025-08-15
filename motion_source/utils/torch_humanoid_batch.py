@@ -75,7 +75,7 @@ class Humanoid_Batch:
             self.has_freejoint = False
         
         self.dof_axis = torch.tensor(self.dof_axis)
-
+        # import ipdb; ipdb.set_trace()
         for extend_config in cfg.extend_config:
             self.body_names_augment += [extend_config.joint_name]
             self._parents = torch.cat([self._parents, torch.tensor([self.body_names.index(extend_config.parent_name)]).to(device)], dim = 0)

@@ -1,6 +1,7 @@
 from easydict import EasyDict
 
 def g1_mapping():
+    # import ipdb; ipdb.set_trace()
     #### Config for extension
     extend_config = [
         {
@@ -63,6 +64,77 @@ def g1_mapping():
     ]
 
     asset_file = "../description/robots/g1/g1_29dof_rev_1_0.xml"
+
+    return EasyDict(
+        extend_config=extend_config,
+        base_link=base_link,
+        joint_matches=joint_matches,
+        smpl_pose_modifier=smpl_pose_modifier,
+        asset_file=asset_file,
+    )
+
+def N2_mapping():
+    # import ipdb; ipdb.set_trace()
+    #### Config for extension
+    extend_config = [
+        {
+            "joint_name": "left_hand_link",
+            "parent_name": "L_arm_elbow_Link",
+            "pos": [-0.0045, 0.00036368, -0.1815],
+            "rot": [1.0, 0.0, 0.0, 0.0],
+        },
+        {
+            "joint_name": "right_hand_link",
+            "parent_name": "R_arm_elbow_Link",
+            "pos": [-0.0045, 0.00036368, -0.1815],
+            "rot": [1.0, 0.0, 0.0, 0.0],
+        },
+        {
+            "joint_name": "head_link",
+            "parent_name": "base_link",
+            "pos": [ 0.0, 0.0, 0.42 ],
+            "rot": [1.0, 0.0, 0.0, 0.0],
+        },
+                {
+            "joint_name": "left_toe_link",
+            "parent_name": "R_leg_ankle_link",
+            "pos": [0.08, 0.0, -0.01],
+            "rot": [1.0, 0.0, 0.0, 0.0],
+        },
+        {
+            "joint_name": "right_toe_link",
+            "parent_name": "R_leg_ankle_link",
+            "pos": [0.08, 0.0, -0.01],
+            "rot": [1.0, 0.0, 0.0, 0.0],
+        },
+        
+    ]
+
+    base_link = "base_link"
+    joint_matches = [
+        ["base_link", "Pelvis"],
+        ["L_leg_hip_yaw_link", "L_Hip"],
+        ["L_leg_knee_link", "L_Knee"],
+        ["L_leg_ankle_link", "L_Ankle"],
+        ["R_leg_hip_yaw_link", "R_Hip"],
+        ["R_leg_knee_link", "R_Knee"],
+        ["R_leg_ankle_link", "R_Ankle"],
+        ["L_arm_shoulder_pitch_Link", "L_Shoulder"],
+        ["L_arm_elbow_Link", "L_Elbow"],
+        ["left_hand_link", "L_Hand"],
+        ["R_arm_shoulder_pitch_Link", "R_Shoulder"],
+        ["R_arm_elbow_Link", "R_Elbow"],
+        ["right_hand_link", "R_Hand"],
+        ["head", "Head"],
+    ]
+
+    smpl_pose_modifier = [
+        {"Pelvis": "[np.pi/2, 0, np.pi/2]"},
+        {"L_Shoulder": "[0, 0, -np.pi/2]"},
+        {"R_Shoulder": "[0, 0, np.pi/2]"}
+    ]
+
+    asset_file = "../description/robots/N2/mjcf/N2.xml"
 
     return EasyDict(
         extend_config=extend_config,
@@ -152,5 +224,7 @@ def get_config(humanoid_type: str):
         return g1_mapping()
     elif humanoid_type == "smplx_humanoid_with_limits":
         return smplx_with_limits_mapping()
+    elif humanoid_type == "N2":
+        return N2_mapping()
     else:
         raise NotImplementedError

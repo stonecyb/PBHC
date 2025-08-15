@@ -206,7 +206,6 @@ class MHPPO(BaseAlgo):
     def learn(self):
         if self.init_at_random_ep_len:
             self.env.episode_length_buf = torch.randint_like(self.env.episode_length_buf, high=int(self.env.max_episode_length))
-        
         obs_dict = self.env.reset_all()
         for obs_key in obs_dict.keys():
             obs_dict[obs_key] = obs_dict[obs_key].to(self.device)
@@ -221,7 +220,6 @@ class MHPPO(BaseAlgo):
         # for it in track(range(self.current_learning_iteration, tot_iter), description="Learning Iterations"):
         for it in range(self.current_learning_iteration, tot_iter):
             self.start_time = time.time()
-
             obs_dict =self._rollout_step(obs_dict)
 
             loss_dict = self._training_step()
@@ -272,7 +270,7 @@ class MHPPO(BaseAlgo):
             for i in range(self.num_steps_per_env):
                 # Compute the actions and values
                 # actions = self.actor.act(obs_dict["actor_obs"]).detach()
-                
+
                 policy_state_dict = {}
                 policy_state_dict = self._actor_rollout_step(obs_dict, policy_state_dict)
                 values = self._critic_eval_step(obs_dict).detach() # (num_rew_fn, 1)

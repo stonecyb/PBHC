@@ -28,6 +28,15 @@ save_dir: ${experiment_dir}/.hydra
 force_flat_terrain: False
 
 use_wandb: False
+
+wandb:
+  wandb_project: null
+  wandb_tags: 'online' # 'online' or 'offline' or 'disabled'
+  wandb_group: null
+  wandb_id: null
+  wandb_entity: null
+  wandb_dir: ${experiment_dir}/.wandb
+
 log_task_name: TEST
 
 ### Simulation

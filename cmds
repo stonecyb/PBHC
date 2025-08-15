@@ -1,0 +1,91 @@
+python humanoidverse/train_agent.py \
++simulator=isaacgym +exp=motion_tracking +terrain=terrain_locomotion_plane \
+project_name=MotionTracking num_envs=4096 \
++obs=motion_tracking/main \
++robot=g1/g1_23dof_lock_wrist \
++domain_rand=dr_nil \
++rewards=motion_tracking/main \
+experiment_name=benchmark \
+robot.motion.motion_file="motion_source/lafan_pkl_contact_mask/dance2_subject1_3000_4000_cont_mask.pkl" \
+seed=1 \
++device=cuda:0
+
+python humanoidverse/eval_agent.py +device=cuda:0 +env.config.enforce_randomize_motion_start_eval=False +checkpoint=logs/MotionTracking/20250707_145356-benchmark-motion_tracking-g1_23dof_lock_wrist/model_50000.pt
+
+python humanoidverse/train_agent.py \
++simulator=isaacgym +exp=motion_tracking +terrain=terrain_locomotion_plane \
+project_name=MotionTracking num_envs=4096 \
++obs=motion_tracking/main \
++robot=g1/g1_23dof_lock_wrist \
++domain_rand=main \
++rewards=motion_tracking/main \
+experiment_name=yinggewu_009_inter0.5_S760-50_E1281-10 \
+robot.motion.motion_file="smpl_retarget/retargeted_motion_data/mink_g1/yinggewu_009_inter0.5_S760-50_E1281-10.pkl" \
+seed=1 \
++device=cuda:0
+
+python humanoidverse/train_agent.py \
++simulator=isaacgym +exp=motion_tracking +terrain=terrain_locomotion_plane \
+project_name=MotionTracking_N2 num_envs=4096 \
++obs=motion_tracking/main_N2 \
++robot=N2/N2 \
++domain_rand=main_N2 \
++rewards=motion_tracking/main_N2 \
+experiment_name=yinggewu \
+robot.motion.motion_file="smpl_retarget/retargeted_motion_data/mink_N2/yinggewu1111_inter0.5_S1000-30_E1200-30.pkl" \
+seed=1 \
++device=cuda:0
+
+
+
+
+python humanoidverse/train_agent.py \
++simulator=isaacgym +exp=motion_tracking +terrain=terrain_locomotion_plane \
+project_name=MotionTracking num_envs=4096 \
++obs=motion_tracking/main \
++robot=g1/g1_23dof_lock_wrist \
++domain_rand=main \
++rewards=motion_tracking/main \
+experiment_name=yinggewu_007_inter0.5_S0-50_E1265-50 \
+robot.motion.motion_file="smpl_retarget/retargeted_motion_data/mink_g1/yinggewu_007_inter0.5_S0-50_E1265-50.pkl" \
+seed=1 \
++device=cuda:0 \
++checkpoint=logs/MotionTracking/20250805_095227-yinggewu_007_inter0.5_S0-50_E1265-50-motion_tracking-g1_23dof_lock_wrist/model_27000.pt
+
+python humanoidverse/urci.py +opt=record +simulator=mujoco +checkpoint=logs/MotionTracking/20250707_145356-benchmark-motion_tracking-g1_23dof_lock_wrist/model_49000.pt
+
+
+7.9 long range motion dance2 lafan 3000-5000 step2 1000 frames (30s) failed on sim2sim test
+reason: bad start motion 
+python humanoidverse/eval_agent.py +device=cuda:0 +env.config.enforce_randomize_motion_start_eval=False +checkpoint=logs/MotionTracking/20250708_155458-benchmark-motion_tracking-g1_23dof_lock_wrist/model_50000.pt
+
+python humanoidverse/urci.py +simulator=mujoco +checkpoint=logs/MotionTracking/20250708_155458-benchmark-motion_tracking-g1_23dof_lock_wrist/exported/model_50000.onnx
+
+# chicken dance
++motion_file=smpl_retarget/retargeted_motion_data/mink_g1_cmu/18_15_poses.pkl
+
+# nursery rhyme - 'I`m a little teapot...'
++motion_file=smpl_retarget/retargeted_motion_data/mink_g1_cmu/27_07_poses.pkl
+
+# lambaba dance
++motion_file=smpl_retarget/retargeted_motion_data/mink_g1_cmu/55_02_poses.pkl
+
+# 
++motion_file=smpl_retarget/retargeted_motion_data/mink_g1_cmu/60_01_poses.pkl
+
+
+python robot_motion_process/motion_interpolation_pkl.py --origin_file_name smpl_retarget/retargeted_motion_data/mink_g1_cmu/27_07_poses.pkl --start_inter_frame 50 --end_inter_frame 50 --start 0 --end 205
+
+python humanoidverse/train_agent.py \
++simulator=isaacgym +exp=motion_tracking +terrain=terrain_locomotion_plane \
+project_name=MotionTracking num_envs=1 \
++obs=motion_tracking/main \
++robot=N2/N2 \
++domain_rand=main \
++rewards=motion_tracking/main \
+experiment_name=yinggewu \
+robot.motion.motion_file="smpl_retarget/retargeted_motion_data/mink_N2_cmu/27_07_poses.pkl" \
+seed=1 \
++device=cuda:0
+
+

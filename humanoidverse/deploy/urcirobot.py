@@ -133,7 +133,7 @@ class URCIRobot:
                     # breakpoint()
                 
                 self.UpdateObs()
-                
+                import ipdb; ipdb.set_trace()
                 action = policy_fn(self.Obs())[0]
                 
                 if self.BYPASS_ACT: action = np.zeros_like(action)

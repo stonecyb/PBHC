@@ -33,7 +33,7 @@ from tqdm import tqdm
 @hydra.main(version_base=None, config_path="../../description/robots/cfg", config_name="config")
 def main(cfg : DictConfig) -> None:
     
-    robot_name = "h1"
+    # robot_name = "h1"
     humanoid_fk = Humanoid_Batch(cfg.robot) # load forward kinematics model
 
     robot_joint_names = humanoid_fk.body_names
@@ -118,7 +118,7 @@ def main(cfg : DictConfig) -> None:
         plt.show()
 
     os.makedirs(f"./retargeted_motion_data/phc", exist_ok=True)
-    joblib.dump((shape_new.detach(), scale), f"./retargeted_motion_data/phc/shape_optimized_v1.pkl") # V2 has hip joints
+    joblib.dump((shape_new.detach(), scale), f"./retargeted_motion_data/phc/shape_optimized_N2.pkl") # V2 has hip joints
 
 
 if __name__ == "__main__":

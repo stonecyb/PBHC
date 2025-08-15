@@ -154,7 +154,7 @@ class IsaacGym(BaseSimulator):
         asset_file = self.robot_config.asset.urdf_file
         self.robot_asset = self._setup_robot_asset_when_env_created(asset_root, asset_file, self.robot_config.asset)
         self.num_dof, self.num_bodies, self.dof_names, self.body_names = self._setup_robot_props_when_env_created()
-        
+        # import ipdb; ipdb.set_trace()
         # assert if  aligns with config
         assert self.num_dof == len(self.robot_config.dof_names), "Number of DOFs must be equal to number of actions"
         assert self.num_bodies == len(self.robot_config.body_names), "Number of bodies must be equal to number of body names"
@@ -446,7 +446,7 @@ class IsaacGym(BaseSimulator):
                 sum += p.mass
                 logger.debug(f"Mass of body {i}: {p.mass} (before randomization)")
             logger.debug(f"Total mass {sum} (before randomization)")
-
+        # import ipdb; ipdb.set_trace()
         # randomize base com
         if self.env_config.domain_rand.randomize_base_com:
             if env_id<3:
@@ -454,7 +454,7 @@ class IsaacGym(BaseSimulator):
             try:
                 torso_index = self._body_list.index("torso_link")
             except:
-                torso_index = self._body_list.index("pelvis") # for fixed upper URDF we only have pelvis link
+                torso_index = self._body_list.index("base_link") # for fixed upper URDF we only have pelvis link
             assert torso_index != -1
 
             com_x_bias = np.random.uniform(self.env_config.domain_rand.base_com_range.x[0], self.env_config.domain_rand.base_com_range.x[1])
@@ -532,7 +532,11 @@ class IsaacGym(BaseSimulator):
         if self.env_config.domain_rand.randomize_base_mass:
             rng = self.env_config.domain_rand.added_mass_range
             try:
-                base_index = self._body_list.index("pelvis") # for fixed upper URDF we only have pelvis link
+                # for N2 robot no pelvis (is base link)
+                if "base_link" in self._body_list:
+                    base_index = self._body_list.index("base_link")
+                else:
+                    base_index = self._body_list.index("pelvis") # for fixed upper URDF we only have pelvis link
             except:
                 base_index = self._body_list.index("torso_link")
             assert base_index != -1

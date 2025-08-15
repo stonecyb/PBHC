@@ -499,6 +499,7 @@ class Humanoid_Batch:
 
 @hydra.main(version_base=None, config_path="../../phc/data/cfg", config_name="config")
 def main(cfg: DictConfig):
+    # import ipdb; ipdb.set_trace()
     device = torch.device("cpu")
     humanoid_fk = Humanoid_Batch(cfg.robot, device)
     humanoid_fk.mesh_fk()

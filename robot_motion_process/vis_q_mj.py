@@ -111,6 +111,7 @@ def main(cfg : DictConfig) -> None:
 
 
     humanoid_xml = "./description/robots/g1/g1_23dof_lock_wrist.xml"
+    # humanoid_xml = "./description/robots/N2/mjcf/N2.xml"
     print(humanoid_xml)
     
     vis_smpl = False if 'vis_smpl' not in cfg else cfg.vis_smpl

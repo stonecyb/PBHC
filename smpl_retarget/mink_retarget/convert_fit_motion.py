@@ -323,10 +323,65 @@ def main(
                 shape_new, scale = joblib.load(f"./mink_retarget/shape_optimized_neutral.pkl")
                 print("shape_new: ", shape_new)
                 print("scale: ", scale)
+                def compute_verts_joints_in_chunks(
+                    smpl_parser,        # 你的 SMPL parser
+                    pose_seq,           # (T, J, 3) 极长，比如 T=20000
+                    shape,              # (1, shape_dim)
+                    root_trans,         # (T, 3)
+                    scale,              # 标量或 (T,) / (T,1,1)
+                    chunk_size=1024     # 每块处理多少帧，调成几百到几千，看你内存情况
+                ):
+                    T = pose_seq.shape[0]
+                    verts_chunks = []
+                    joints_chunks = []
+
+                    with torch.no_grad():
+                        for start in range(0, T, chunk_size):
+                            end = min(start + chunk_size, T)
+                            p_chunk = pose_seq[start:end]            # (B, J, 3)
+                            rt_chunk = root_trans[start:end]         # (B, 3)
+                            # 如果 scale 是 per-frame，还要 slice：
+                            s_chunk = scale[start:end]               # (B,) 
+                            # expand shape 到 B
+                            sh_chunk = shape.expand(end-start, -1)   # (B, shape_dim)
+
+                            # 这一句可能是内部调用了 torch.matmul
+                            verts, joints = smpl_parser.get_joints_verts(
+                                p_chunk, sh_chunk, rt_chunk
+                            )  # verts:(B, V,3), joints:(B, J,3)
+
+                            # 立刻搬到 CPU，释放掉 parser 内部的临时张量
+                            verts_chunks.append(verts.cpu())
+                            joints_chunks.append(joints.cpu())
+
+                            # 强制回收一下
+                            del verts, joints, p_chunk, rt_chunk, s_chunk, sh_chunk
+                            torch.cuda.empty_cache()  # 即便在 CPU 上也能帮助释放 PyTorch 缓存
+
+                    # 把所有块拼回去
+                    all_verts  = torch.cat(verts_chunks, dim=0)   # (T, V, 3)
+                    all_joints = torch.cat(joints_chunks, dim=0)  # (T, J, 3)
+                    return all_verts, all_joints
 
                 with torch.no_grad():
-                    verts, joints = smpl_parser_n.get_joints_verts(pose_aa_walk, shape_new, root_trans)
-                    origin_verts, origin_global_trans = smpl_parser_n.get_joints_verts(pose_aa_walk, origin_shape.unsqueeze(0), root_trans)
+                    verts, joints = compute_verts_joints_in_chunks(
+                        smpl_parser_n,
+                        pose_aa_walk,        # (T, J, 3)
+                        shape_new,
+                        root_trans,
+                        scale,
+                        chunk_size=512       # 或者更小，直到不再 OOM
+                    )
+                    origin_verts, origin_global_trans = compute_verts_joints_in_chunks(
+                        smpl_parser_n,
+                        pose_aa_walk,        # (T, J, 3)
+                        origin_shape.unsqueeze(0),
+                        root_trans,
+                        scale,
+                        chunk_size=512       # 或者更小，直到不再 OOM
+                    )
+                    # verts, joints = smpl_parser_n.get_joints_verts(pose_aa_walk, shape_new, root_trans)
+                    # origin_verts, origin_global_trans = smpl_parser_n.get_joints_verts(pose_aa_walk, origin_shape.unsqueeze(0), root_trans)
                     root_pos = joints[:, 0:1]
                     joints = (joints - joints[:, 0:1]) * scale.detach() + root_pos
 
@@ -412,7 +467,7 @@ def main(
                     motion_data['pose_aa'] = pose_aa
                     motion_data['dof'] = dof
 
-                    output_folder_path = "./retargeted_motion_data/mink"
+                    output_folder_path = "./retargeted_motion_data/mink_N2"
 
                     os.makedirs(output_folder_path, exist_ok=True)
                     path = os.path.join(output_folder_path, f"{filename.stem}.pkl")
@@ -423,7 +478,7 @@ def main(
                     with open((path), 'wb') as f:
                         pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
                     
-                    if robot_type in ["h1", "g1"]:
+                    if robot_type in ["h1", "g1","N2"]:
                         torch.save(new_sk_motion, str(outpath))
                     else:
                         new_sk_motion.to_file(str(outpath))
