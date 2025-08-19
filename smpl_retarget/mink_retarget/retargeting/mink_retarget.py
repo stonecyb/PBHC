@@ -124,10 +124,35 @@ _N2_KEYPOINT_TO_JOINT = {
     # "R_Hand": {"name": "right_rubber_hand_2", "weight": 3.0},
 }
 
+_taihu_KEYPOINT_TO_JOINT = {
+    "Pelvis": {"name": "BASE_S", "weight": 3.0},
+    "Head": {"name": "head", "weight": 2.0},
+    # Legs.
+    "L_Hip": {"name": "L_HIP_Y_S", "weight": 1.0},
+    "R_Hip": {"name": "R_HIP_Y_S", "weight": 1.0},
+    "L_Knee": {"name": "L_KNEE_P_S", "weight": 2.0},
+    "R_Knee": {"name": "R_KNEE_P_S", "weight": 2.0},
+    "L_Ankle": {"name": "L_ANKLE_R_S", "weight": 1.0},
+    "R_Ankle": {"name": "R_ANKLE_R_S", "weight": 1.0},
+    # Arms.
+    "L_Elbow": {"name": "L_ELBOW_Y_S", "weight": 1.0},
+    "R_Elbow": {"name": "R_ELBOW_Y_S", "weight": 1.0},
+    "L_Wrist": {"name": "L_WRIST_Y_S", "weight": 1.0},
+    "R_Wrist": {"name": "R_WRIST_Y_S", "weight": 1.0},
+    # Shoulders
+    "L_Shoulder": {"name": "L_SHOULDER_P_S", "weight": 3.0},
+    "R_Shoulder": {"name": "R_SHOULDER_P_S", "weight": 3.0},
+
+    # toe
+    'L_Toe': {'name': 'left_toe_link', 'weight': 1.0},
+    'R_Toe': {'name': 'right_toe_link', 'weight': 1.0},
+
+}
 _KEYPOINT_TO_JOINT_MAP = {
     "h1": _H1_KEYPOINT_TO_JOINT,
     "g1": _G1_KEYPOINT_TO_JOINT,
-    "N2": _N2_KEYPOINT_TO_JOINT
+    "N2": _N2_KEYPOINT_TO_JOINT,
+    "taihu": _taihu_KEYPOINT_TO_JOINT
 }
 
 _RESCALE_FACTOR = {
@@ -135,6 +160,7 @@ _RESCALE_FACTOR = {
     # "g1": np.array([0.75, 1.0, 0.8]),
     "g1": np.array([1.0, 1.0, 1.0]),
     "N2": np.array([1.0, 1.0, 1.0]),
+    'taihu': np.array([1.0, 1.0, 1.0]),
 }
 
 _OFFSET = {
@@ -144,7 +170,8 @@ _OFFSET = {
 _ROOT_LINK = {
     "h1": "pelvis",
     "g1": "pelvis",
-    "N1": "base_link",
+    "N2": "base_link",
+    "taihu": "BASE_S"
 }
 
 _H1_VELOCITY_LIMITS = {
@@ -258,10 +285,11 @@ def construct_model(robot_name: str, keypoint_names: Sequence[str]):
         humanoid_mjcf = mjcf.from_path("../description/robots/g1/h1.xml")
     elif robot_name == "g1":
         humanoid_mjcf = mjcf.from_path("../description/robots/g1/g1_29dof_rev_1_0_with_toe.xml")
-        # humanoid_mjcf = mjcf.from_path("protomotions/data/assets/mjcf/g1.xml")
     elif robot_name == "N2":
         humanoid_mjcf = mjcf.from_path("../description/robots/N2/mjcf/N2_mink.xml")
         # import ipdb; ipdb.set_trace()
+    elif robot_name == "taihu":
+        humanoid_mjcf = mjcf.from_path("../description/robots/taihu/mjcf/mjmodel.xml")
     else:
         raise ValueError(f"Unknown robot name: {robot_name}")
     humanoid_mjcf.worldbody.add(
@@ -671,7 +699,7 @@ def retarget_fit_motion(global_trans, pose_quat_global, mo_fps, robot_type: str,
     retargeted_trans = np.stack(retargeted_trans)
 
     # Create skeleton motion
-    if robot_type in ["h1", "g1", "N2"]:
+    if robot_type in ["h1", "g1", "N2","taihu"]:
         return create_robot_motion(
             retargeted_poses, retargeted_trans, global_translations, fps, robot_type
         )

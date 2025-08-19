@@ -144,6 +144,66 @@ def N2_mapping():
         asset_file=asset_file,
     )
 
+def taihu_mapping():
+    # import ipdb; ipdb.set_trace()
+    #### Config for extension
+    extend_config = [
+        {
+            "joint_name": "head_link",
+            "parent_name": "NECK_Y_S",
+            "pos": [ 0.0, 0.0, 0.2 ],
+            "rot": [1.0, 0.0, 0.0, 0.0],
+        },
+                {
+            "joint_name": "left_toe_link",
+            "parent_name": "L_ANKLE_R_S",
+            "pos": [0.08, 0., -0.03],
+            "rot": [1.0, 0.0, 0.0, 0.0],
+        },
+        {
+            "joint_name": "right_toe_link",
+            "parent_name": "R_ANKLE_R_S",
+            "pos": [0.08, 0., -0.03],
+            "rot": [1.0, 0.0, 0.0, 0.0],
+        },
+        
+    ]
+
+    base_link = "BASE_S"
+    joint_matches = [
+        ["BASE_S", "Pelvis"],
+        ["L_HIP_Y_S", "L_Hip"],
+        ["L_KNEE_R_S", "L_Knee"],
+        ["L_ANKLE_R_S", "L_Ankle"], 
+
+        ["R_HIP_Y_S", "R_Hip"],
+        ["R_KNEE_R_S", "R_Knee"],
+        ["R_ANKLE_R_S", "R_Ankle"],
+
+        ["L_SHOULDER_P_S", "L_Shoulder"],
+        ["L_ELBOW_R_S", "L_Elbow"],
+        ["R_WRIST_Y_S", "L_Hand"],
+
+        ["R_SHOULDER_P_S", "R_Shoulder"],
+        ["R_ELBOW_R_S", "R_Elbow"],
+        ["R_WRIST_Y_S", "R_Hand"],
+
+        ["NECK_Y_S", "Neck"],
+        ["head_link", "Head"]
+    ]
+    smpl_pose_modifier = [
+        {"Pelvis": "[np.pi/2, 0, np.pi/2]"}
+    ]
+
+    asset_file = "../description/robots/taihu/mjcf/mjmodel_back.xml"
+    return EasyDict(
+        extend_config=extend_config,
+        base_link=base_link,
+        joint_matches=joint_matches,
+        smpl_pose_modifier=smpl_pose_modifier,
+        asset_file=asset_file,
+    )
+
 def smplx_with_limits_mapping():
     #### Config for extension
     extend_config = []
@@ -226,5 +286,7 @@ def get_config(humanoid_type: str):
         return smplx_with_limits_mapping()
     elif humanoid_type == "N2":
         return N2_mapping()
+    elif humanoid_type == "taihu":
+        return taihu_mapping()
     else:
         raise NotImplementedError

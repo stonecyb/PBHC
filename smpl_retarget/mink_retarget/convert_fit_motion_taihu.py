@@ -48,14 +48,14 @@ def foot_detect(positions, thres=0.002):
 def count_pose_aa(motion):
     dof = motion['dof']
     root_qua = motion['root_rot']
-    dof_new = np.concatenate((dof[:, :19], dof[:, 22:26]), axis=1)
+    dof_new = dof
     root_aa = sRot.from_quat(root_qua).as_rotvec()
 
-    dof_axis = np.load('../description/robots/N2/dof_axis.npy', allow_pickle=True)
+    dof_axis = np.load('../description/robots/taihu/dof_axis.npy', allow_pickle=True)
     dof_axis = dof_axis.astype(np.float32)
 
     pose_aa = np.concatenate(
-        (np.expand_dims(root_aa, axis=1), dof_axis * np.expand_dims(dof_new, axis=2), np.zeros((dof_new.shape[0], 3, 3))),
+        (np.expand_dims(root_aa, axis=1), dof_axis * np.expand_dims(dof_new, axis=2)),
         axis=1).astype(np.float32)
     
     return pose_aa,dof_new
@@ -83,7 +83,7 @@ def correct_motion(contact_mask, verts, trans):
 
 def main(
     amass_root_dir: Path,
-    robot_type: str = 'N2',
+    robot_type: str = 'taihu',
     humanoid_type: str = "smpl",
     force_remake: bool = False,
     force_neutral_body: bool = True,
@@ -94,7 +94,7 @@ def main(
 ):
     if robot_type is None:
         robot_type = humanoid_type
-    elif robot_type in ["h1", "g1","N2"]:
+    elif robot_type in ["h1", "g1","N2", "taihu"]:
         assert (
             force_retarget
         ), f"Data is either SMPL or SMPL-X. The {robot_type} robot must use the retargeting pipeline."
@@ -320,7 +320,7 @@ def main(
                 import joblib
                 smpl_parser_n = SMPL_Parser(model_path="./smpl_model/smpl", gender="neutral")
                 print("smpl_parser_n: ", smpl_parser_n)
-                shape_new, scale = joblib.load(f"./retargeted_motion_data/phc/shape_optimized_N2_temp.pkl")
+                shape_new, scale = joblib.load(f"./retargeted_motion_data/phc/shape_optimized_taihu.pkl")
                 # shape_new, scale = joblib.load(f"./mink_retarget/shape_optimized_N2.pkl")
                 print("shape_new: ", shape_new)
                 print("scale: ", scale)
@@ -468,7 +468,7 @@ def main(
                     motion_data['pose_aa'] = pose_aa
                     motion_data['dof'] = dof
 
-                    output_folder_path = "./retargeted_motion_data/mink_N2"
+                    output_folder_path = "./retargeted_motion_data/mink_taihu"
 
                     os.makedirs(output_folder_path, exist_ok=True)
                     path = os.path.join(output_folder_path, f"{filename.stem}.pkl")
@@ -479,7 +479,7 @@ def main(
                     with open((path), 'wb') as f:
                         pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
                     
-                    if robot_type in ["h1", "g1", "N2"]:
+                    if robot_type in ["h1", "g1", "N2", "taihu"]:
                         torch.save(new_sk_motion, str(outpath))
                     else:
                         new_sk_motion.to_file(str(outpath))

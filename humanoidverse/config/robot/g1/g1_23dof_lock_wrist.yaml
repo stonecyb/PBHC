@@ -79,6 +79,7 @@ robot:
 
 
   terminate_after_contacts_on : ["pelvis", "shoulder", "hip"]
+  # 8.1 add ankle
   penalize_contacts_on: ["pelvis", "shoulder", "hip", "torso", "waist", "elbow"]
   init_state:
     pos: [0.0, 0.0, 0.8] # x,y,z [m]

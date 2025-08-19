@@ -83,6 +83,8 @@ def correct_motion(contact_mask, verts, trans):
 
 def main(
     amass_root_dir: Path,
+    output_folder_path: Path,
+    convert_rot: bool = False,
     robot_type: str = 'g1',
     humanoid_type: str = "smpl",
     force_remake: bool = False,
@@ -216,11 +218,31 @@ def main(
                 print(f"Processing {filename}")
                 if filename.suffix == ".npz" and "samp" not in str(filename):
                     motion_data = np.load(filename)
+                    convert_rot = False
+                    def recover_rot(motion):
+                        body_pose = motion['poses']
+                        trans = motion['trans']
+                        transform1 = sRot.from_euler('xyz', np.array([np.pi / 2, 0, np.pi]), degrees=False)
+                        current_global_orient = body_pose[:, :3]
+                        current_rot = sRot.from_rotvec(current_global_orient)
 
+                        transform_inv = transform1.inv()
+                        original_global_rot = transform_inv * current_rot
+
+                        body_pose[:, :3] = original_global_rot.as_rotvec()
+                        transform_matrix = transform1.as_matrix()
+
+                        trans = trans @ transform_matrix
+
+                        return body_pose, trans
+                    
                     betas = motion_data["betas"]
                     gender = motion_data["gender"]
-                    amass_pose = motion_data["poses"]
-                    amass_trans = motion_data["trans"]
+                    if convert_rot:
+                        amass_pose, amass_trans = recover_rot(motion_data)
+                    else:
+                        amass_pose = motion_data["poses"]
+                        amass_trans = motion_data["trans"]
                     if humanoid_type == "smplx":
                         # Load the fps from the yaml file
                         fps_yaml_path = Path("data/yaml_files/motion_fps_amassx.yaml")
@@ -260,7 +282,6 @@ def main(
                         motion_data = pickle.load(
                             f, encoding="latin1"
                         )  # np.load(filename)
-
                     betas = motion_data["shape_est_betas"][:10]
                     gender = "neutral"  # motion_data["gender"]
                     amass_pose = motion_data["pose_est_fullposes"]
@@ -467,7 +488,7 @@ def main(
                     motion_data['pose_aa'] = pose_aa
                     motion_data['dof'] = dof
 
-                    output_folder_path = "./retargeted_motion_data/mink_N2"
+                    # output_folder_path = "./retargeted_motion_data/mink_g1_cmu"
 
                     os.makedirs(output_folder_path, exist_ok=True)
                     path = os.path.join(output_folder_path, f"{filename.stem}.pkl")

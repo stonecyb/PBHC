@@ -162,8 +162,8 @@ def main(override_config: OmegaConf):
     algo.setup()
     algo.load(config.checkpoint)
 
-    EXPORT_POLICY = True
-    EXPORT_ONNX = False
+    EXPORT_POLICY = False
+    EXPORT_ONNX = True
 
     checkpoint_path = str(checkpoint)
 
@@ -176,7 +176,7 @@ def main(override_config: OmegaConf):
     os.makedirs(exported_policy_path, exist_ok=True)
     exported_policy_name = checkpoint_path.split('/')[-1]
     exported_onnx_name = exported_policy_name.replace('.pt', '.onnx')
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     if EXPORT_POLICY:
         export_policy_as_jit(algo, exported_policy_path, exported_policy_name)
         logger.info('Exported policy as jit script to: ', os.path.join(exported_policy_path, exported_policy_name))

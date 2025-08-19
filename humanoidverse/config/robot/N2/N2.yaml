@@ -41,10 +41,14 @@ robot:
               'L_leg_hip_pitch_joint', 'L_leg_knee_joint', 'L_leg_ankle_joint','R_leg_hip_yaw_joint', 'R_leg_hip_roll_joint',
               'R_leg_hip_pitch_joint', 'R_leg_knee_joint', 'R_leg_ankle_joint']
   waist_dof_names: []
-  dof_pos_lower_limit_list: [-2.7, 0, -2.7, -1.8, -0.65, -0.65, 
-                             -1.57, 0, -1, -2.7, -2.1, -2.7, -1.8, -1, -1, -1.57, 0, -1]
-  dof_pos_upper_limit_list: [2.7, 2.1, 2.7, 1, 1, 1, 
-                             0.78, 2.2, 0.75, 2.7, 0, 2.7, 1, 0.65, 0.65, 0.78, 2.2, 0.75]
+  dof_pos_lower_limit_list: [-2.7, 0, -2.7, -1.8, 
+                             -0.65, -0.65, -1.57, 0, -1, 
+                             -2.7, -2.1, -2.7, -1.8, 
+                             -1, -1, -1.57, 0, -1]
+  dof_pos_upper_limit_list: [2.7, 2.1, 2.7, 1, 
+                             1, 1,0.78, 2.2, 0.75, 
+                             2.7, 0, 2.7, 1, 
+                             0.65, 0.65, 0.78, 2.2, 0.75]
   dof_vel_limit_list: [12., 12., 12., 12., 14., 14., 14., 14., 12., 12., 12., 12., 12., 12., 12., 14., 14., 14.]
   dof_effort_limit_list: [36.,  36.,  36.,  36.,  90.,  90., 150., 150.,  36.,  36.,  36.,  36., 36.,  90.,  90., 150., 150.,  36.]
   
@@ -63,7 +67,7 @@ robot:
 
 
   terminate_after_contacts_on : ["base_link", "shoulder", "hip"]
-  penalize_contacts_on: ["base_link", "shoulder", "hip"]
+  penalize_contacts_on: ["base_link", "shoulder", "hip","elbow"]
   init_state:
     pos: [0.0, 0.0, 0.65] # x,y,z [m]
     rot: [0.0, 0.0, 0.0, 1.0] # x,y,z,w [quat]
@@ -74,19 +78,19 @@ robot:
       L_leg_hip_roll_joint : 0            
       L_leg_hip_pitch_joint : -0.16    
       L_leg_knee_joint : 0.36    
-      L_leg_ankle_joint : -0.2  
+      L_leg_ankle_joint : -0.2
       R_leg_hip_yaw_joint : 0. 
       R_leg_hip_roll_joint : 0 
-      R_leg_hip_pitch_joint : -0.16                                    
-      R_leg_knee_joint : 0.36                                          
-      R_leg_ankle_joint : -0.2                                  
+      R_leg_hip_pitch_joint : -0.16
+      R_leg_knee_joint : 0.36
+      R_leg_ankle_joint : -0.2
       # torso_joint : 0. 
       L_arm_shoulder_pitch_joint : 0. 
-      L_arm_shoulder_roll_joint : 0 
+      L_arm_shoulder_roll_joint : 0.3
       L_arm_shoulder_yaw_joint : 0.
       L_arm_elbow_joint  : 0.
       R_arm_shoulder_pitch_joint : 0.
-      R_arm_shoulder_roll_joint : 0.0
+      R_arm_shoulder_roll_joint : -0.3
       R_arm_shoulder_yaw_joint : 0.
       R_arm_elbow_joint : 0.
 
@@ -100,16 +104,17 @@ robot:
   control:
     control_type: P
     # PD Drive parameters:
+    # run (from N2_deploy)
     stiffness: # [N*m/rad]
-      hip_yaw: 100
-      hip_roll: 100
-      hip_pitch: 100
-      knee: 200
+      hip_yaw: 80
+      hip_roll: 80
+      hip_pitch: 120
+      knee: 120
       ankle: 20
-      shoulder_pitch: 90
-      shoulder_roll: 60
-      shoulder_yaw: 20
-      elbow: 60
+      shoulder_pitch: 18
+      shoulder_roll: 18
+      shoulder_yaw: 4
+      elbow: 18
       # hip_yaw: 60
       # hip_roll: 60
       # hip_pitch: 60
@@ -123,16 +128,16 @@ robot:
 
 
     damping: # [N*m/rad]  # [N*m*s/rad]
-      hip_yaw: 2.5
-      hip_roll: 2.5
-      hip_pitch: 2.5
+      hip_yaw: 4.
+      hip_roll: 4.
+      hip_pitch: 5.
       # knee: 5.0
-      knee: 3.5
-      ankle: 0.1
+      knee: 5.
+      ankle: 1.
       shoulder_pitch: 2.0
-      shoulder_roll: 1.0
-      shoulder_yaw: 0.4
-      elbow: 1.0
+      shoulder_roll: 2.0
+      shoulder_yaw: 0.2
+      elbow: 2.0
 
     # action scale: target angle = actionScale * action + defaultAngle
     action_scale: 0.25
@@ -204,10 +209,10 @@ robot:
       - ['L_arm_shoulder_pitch_Link', 'L_arm_shoulder_roll_Link','L_arm_shoulder_yaw_Link', 'L_arm_elbow_Link']
       - ['R_arm_shoulder_pitch_Link', 'R_arm_shoulder_roll_Link', 'R_arm_shoulder_yaw_Link', 'R_arm_elbow_Link']
 
-    dof_names: ['L_arm_shoulder_pitch_joint', 'L_arm_shoulder_roll_joint', 'L_arm_shoulder_yaw_joint', 'L_arm_elbow_joint', 'L_leg_hip_yaw_joint', 'L_leg_hip_roll_joint',
-              'L_leg_hip_pitch_joint', 'L_leg_knee_joint', 'L_leg_ankle_joint', 'R_arm_shoulder_pitch_joint', 'R_arm_shoulder_roll_joint', 'R_arm_shoulder_yaw_joint',
-              'R_arm_elbow_joint', 'R_leg_hip_yaw_joint', 'R_leg_hip_roll_joint',
-              'R_leg_hip_pitch_joint', 'R_leg_knee_joint', 'R_leg_ankle_joint']
+    dof_names: ['L_arm_shoulder_pitch_joint', 'L_arm_shoulder_roll_joint', 'L_arm_shoulder_yaw_joint', 'L_arm_elbow_joint', 
+                'L_leg_hip_yaw_joint', 'L_leg_hip_roll_joint', 'L_leg_hip_pitch_joint', 'L_leg_knee_joint', 'L_leg_ankle_joint', 
+                'R_arm_shoulder_pitch_joint', 'R_arm_shoulder_roll_joint', 'R_arm_shoulder_yaw_joint','R_arm_elbow_joint', 
+                'R_leg_hip_yaw_joint', 'R_leg_hip_roll_joint','R_leg_hip_pitch_joint', 'R_leg_knee_joint', 'R_leg_ankle_joint']
     right_foot_name: "R_leg_ankle_link"
     left_foot_name: "L_leg_ankle_link"
 
@@ -224,7 +229,7 @@ robot:
         rot: [1.0, 0.0, 0.0, 0.0] # w x y z
       - joint_name: "head_link"
         parent_name: "base_link"
-        pos: [0.0, 0.0, 0.42]
+        pos: [0.0, 0.0, 0.34]
         rot: [1.0, 0.0, 0.0, 0.0] # w x y z
 
 
@@ -275,8 +280,8 @@ robot:
       - ["L_leg_hip_pitch_link", "L_Hip"]
       - ["L_leg_knee_link", "L_Knee"]
       - ["L_leg_ankle_link", "L_Ankle"]
-      - ["R_leg_knee_link", "R_Hip"]
-      - ["right_knee_link", "R_Knee"]
+      - ["R_leg_hip_pitch_link", "R_Hip"]
+      - ["R_leg_knee_link", "R_Knee"]
       - ["R_leg_ankle_link", "R_Ankle"]
       - ["L_arm_shoulder_roll_Link", "L_Shoulder"]
       - ["L_arm_elbow_Link", "L_Elbow"]

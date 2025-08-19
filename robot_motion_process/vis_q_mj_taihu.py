@@ -112,7 +112,7 @@ def main(cfg : DictConfig) -> None:
 
 
     # humanoid_xml = "./description/robots/g1/g1_23dof_lock_wrist.xml"
-    humanoid_xml = "./description/robots/N2/mjcf/N2.xml"
+    humanoid_xml = "./description/robots/taihu/mjcf/mjmodel_back.xml"
     print(humanoid_xml)
     
     vis_smpl = False if 'vis_smpl' not in cfg else cfg.vis_smpl
@@ -124,7 +124,7 @@ def main(cfg : DictConfig) -> None:
     if vis_tau: assert vis_tau_key in curr_motion and not vis_contact
     if vis_contact: assert 'contact_mask' in curr_motion and not vis_tau
     if not vis_smpl:
-        cfg_robot = OmegaConf.load("description/robots/cfg/robot/N2_18dof.yaml")
+        cfg_robot = OmegaConf.load("description/robots/cfg/robot/taihu.yaml")
         humanoid_fk = Humanoid_Batch(cfg_robot)  # load forward kinematics model
         pose_aa = torch.from_numpy(curr_motion['pose_aa']).unsqueeze(0)
         root_trans = torch.from_numpy(curr_motion['root_trans_offset']).unsqueeze(0)
@@ -178,16 +178,16 @@ def main(cfg : DictConfig) -> None:
                     for i in range(joint_gt.shape[1]):
                         viewer.user_scn.geoms[i].pos = joint_gt[curr_time, i]
             else:
-                for i in range(18):
+                for i in range(30):
                     viewer.user_scn.geoms[i+1].pos = joint_gt[curr_time, i+1]
             
             if vis_contact: 
-                viewer.user_scn.geoms[9].rgba = np.array([0, 1-curr_motion['contact_mask'][curr_time, 0], 0, 1])
-                viewer.user_scn.geoms[18].rgba = np.array([0, 1-curr_motion['contact_mask'][curr_time, 1], 0, 1])
+                viewer.user_scn.geoms[5].rgba = np.array([0, 1-curr_motion['contact_mask'][curr_time, 0], 0, 1])
+                viewer.user_scn.geoms[11].rgba = np.array([0, 1-curr_motion['contact_mask'][curr_time, 1], 0, 1])
                 
             if vis_tau:
                 scale_factor = 0.1
-                for i in range(18):
+                for i in range(30):
                     tau = curr_motion[vis_tau_key][curr_time, i]
                     color_gradient = abs(tau) * scale_factor
                     if tau > 0:

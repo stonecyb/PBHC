@@ -26,7 +26,7 @@ seed=1 \
 
 python humanoidverse/train_agent.py \
 +simulator=isaacgym +exp=motion_tracking +terrain=terrain_locomotion_plane \
-project_name=MotionTracking_N2 num_envs=4096 \
+project_name=temp num_envs=4096 \
 +obs=motion_tracking/main_N2 \
 +robot=N2/N2 \
 +domain_rand=main_N2 \

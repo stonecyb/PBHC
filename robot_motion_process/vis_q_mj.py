@@ -172,7 +172,6 @@ def main(cfg : DictConfig) -> None:
             if not paused:
                 time_step += dt * (1 if not rewind else -1) * speed
             
-                
             if vis_smpl:
                 joint_gt = motion_data[curr_motion_key]['smpl_joints']
                 if not np.all(joint_gt[curr_time] == 0):

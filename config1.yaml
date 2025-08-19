@@ -1,0 +1,1367 @@
+_wandb:
+    value:
+        cli_version: 0.21.0
+        e:
+            jcbqcdbr02azejcjjchhaoky48b35sii:
+                args:
+                    - +simulator=isaacgym
+                    - +exp=motion_tracking
+                    - +terrain=terrain_locomotion_plane
+                    - project_name=MotionTracking
+                    - num_envs=4096
+                    - +obs=motion_tracking/main
+                    - +robot=g1/g1_23dof_lock_wrist
+                    - +domain_rand=main
+                    - +rewards=motion_tracking/main
+                    - experiment_name=27_07_poses_inter0.5_S0-50_E205-50
+                    - robot.motion.motion_file=smpl_retarget/retargeted_motion_data/mink_g1_cmu/27_07_poses_inter0.5_S0-50_E205-50.pkl
+                    - seed=1
+                    - +device=cuda:0
+                codePath: humanoidverse/train_agent.py
+                codePathLocal: humanoidverse/train_agent.py
+                cpu_count: 24
+                cpu_count_logical: 32
+                cudaVersion: "12.9"
+                disk:
+                    /:
+                        total: "1006450962432"
+                        used: "164398551040"
+                email: ycheng1213@gmail.com
+                executable: /home/cheng/anaconda3/envs/pbhc/bin/python
+                git:
+                    commit: 0cb674b452c0ddbe37b5701522b475fac3afafd4
+                    remote: https://github.com/stonecyb/PBHC.git
+                gpu: NVIDIA GeForce RTX 4070 SUPER
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ada
+                      cudaCores: 7168
+                      memoryTotal: "12878610432"
+                      name: NVIDIA GeForce RTX 4070 SUPER
+                      uuid: GPU-f546ef64-c1f9-d9c7-cc97-a4dded8f5030
+                host: cheng-LEGION-REN7000K-26IRX
+                memory:
+                    total: "33262768128"
+                os: Linux-5.15.0-139-generic-x86_64-with-glibc2.17
+                program: humanoidverse/train_agent.py
+                python: CPython 3.8.20
+                root: logs/MotionTracking/20250723_112521-27_07_poses_inter0.5_S0-50_E205-50-motion_tracking-g1_23dof_lock_wrist/.wandb
+                startedAt: "2025-07-23T03:25:23.818652Z"
+                writerId: jcbqcdbr02azejcjjchhaoky48b35sii
+        m: []
+        python_version: 3.8.20
+        t:
+            "1":
+                - 1
+                - 50
+                - 53
+            "2":
+                - 1
+                - 5
+                - 50
+                - 53
+            "3":
+                - 13
+                - 16
+                - 35
+            "4": 3.8.20
+            "5": 0.21.0
+            "12": 0.21.0
+            "13": linux-x86_64
+algo:
+    value:
+        _recursive_: false
+        _target_: humanoidverse.agents.mh_ppo.mh_ppo.MHPPO
+        config:
+            actor_learning_rate: 0.001
+            clip_param: 0.2
+            critic_learning_rate: 0.001
+            desired_kl: 0.01
+            entropy_coef: 0.01
+            eval_callbacks: null
+            gamma: 0.99
+            init_at_random_ep_len: true
+            init_noise_std: 0.8
+            l2c2:
+                enable: false
+                lambda_policy: 0.1
+                lambda_value: 1
+            lam: 0.95
+            load_optimizer: true
+            logging_interval: 25
+            max_grad_norm: 1
+            module_dict:
+                actor:
+                    input_dim:
+                        - actor_obs
+                    layer_config:
+                        activation: ELU
+                        hidden_dims:
+                            - 512
+                            - 256
+                            - 128
+                        type: MLP
+                    output_dim:
+                        - robot_action_dim
+                critic:
+                    input_dim:
+                        - critic_obs
+                    layer_config:
+                        activation: ELU
+                        hidden_dims:
+                            - 768
+                            - 512
+                            - 128
+                        type: MLP
+                    output_dim:
+                        - num_rew_fn
+                    type: MLP
+            num_learning_epochs: 5
+            num_learning_iterations: 51000
+            num_mini_batches: 4
+            num_steps_per_env: 24
+            phase_embed:
+                dim: 16
+                type: Original
+            save_interval: 1000
+            schedule: adaptive
+            use_clipped_value_loss: true
+            value_loss_coef: 1
+auto_load_latest:
+    value: false
+base_dir:
+    value: logs
+checkpoint:
+    value: null
+codebase_version:
+    value: 1
+device:
+    value: cuda:0
+domain_rand:
+    value:
+        _push_fixed: true
+        added_mass_range:
+            - -5
+            - 10
+        base_com_range:
+            x:
+                - -0.05
+                - 0.05
+            "y":
+                - -0.05
+                - 0.05
+            z:
+                - -0.01
+                - 0.01
+        born_distance: 0.25
+        born_heading_curriculum: false
+        born_heading_degree: 10
+        born_heading_level_degree: 5e-05
+        born_heading_level_down_threshold: 50
+        born_heading_level_up_threshold: 120
+        born_heading_randomization: false
+        born_heading_range:
+            - 0
+            - 180
+        born_offset: false
+        born_offset_curriculum: false
+        born_offset_level_down_threshold: 50
+        born_offset_level_up_threshold: 120
+        born_offset_possibility: 1
+        born_offset_range:
+            - 0
+            - 1
+        ctrl_delay_step_range:
+            - 0
+            - 2
+        friction_range:
+            - 0.2
+            - 1.2
+        heavy_upper:
+            body_names:
+                - torso_link
+                - left_shoulder_pitch_link
+                - left_shoulder_roll_link
+                - left_shoulder_yaw_link
+                - left_elbow_link
+                - right_shoulder_pitch_link
+                - right_shoulder_roll_link
+                - right_shoulder_yaw_link
+                - right_elbow_link
+            enable: false
+            ratio: 1.1
+        kd_range:
+            - 0.9
+            - 1.1
+        kp_range:
+            - 0.9
+            - 1.1
+        level_degree: 5e-05
+        link_com_range:
+            x:
+                - -0.01
+                - 0.01
+            "y":
+                - -0.01
+                - 0.01
+            z:
+                - -0.01
+                - 0.01
+        link_inertia_range:
+            - 0.9
+            - 1.1
+        link_mass_range:
+            - 0.9
+            - 1.1
+        max_push_vel_xy: 0.1
+        motion_package_loss: false
+        motion_ref_xyz_range:
+            - - -0.02
+              - 0.02
+            - - -0.02
+              - 0.02
+            - - -0.1
+              - 0.1
+        package_loss_interval_s: 2
+        package_loss_range:
+            - 1
+            - 10
+        parallel_serial_pd:
+            enable: false
+            joint_idx:
+                - 4
+                - 5
+                - 10
+                - 11
+                - 13
+                - 14
+            ratio:
+                - 0.8
+                - 1.2
+        push_interval_s:
+            - 5
+            - 10
+        push_robots: true
+        randomize_base_com: true
+        randomize_base_mass: false
+        randomize_ctrl_delay: true
+        randomize_friction: true
+        randomize_link_body_names:
+            - pelvis
+            - torso_link
+            - left_shoulder_pitch_link
+            - left_shoulder_roll_link
+            - left_shoulder_yaw_link
+            - left_elbow_link
+            - right_shoulder_pitch_link
+            - right_shoulder_roll_link
+            - right_shoulder_yaw_link
+            - right_elbow_link
+            - left_hip_yaw_link
+            - left_hip_roll_link
+            - left_hip_pitch_link
+            - left_knee_link
+            - left_ankle_pitch_link
+            - left_ankle_roll_link
+            - right_hip_yaw_link
+            - right_hip_roll_link
+            - right_hip_pitch_link
+            - right_knee_link
+            - right_ankle_pitch_link
+            - right_ankle_roll_link
+        randomize_link_com: false
+        randomize_link_inertia: true
+        randomize_link_inertia_names:
+            - pelvis
+            - torso_link
+            - left_shoulder_pitch_link
+            - left_shoulder_roll_link
+            - left_shoulder_yaw_link
+            - left_elbow_link
+            - right_shoulder_pitch_link
+            - right_shoulder_roll_link
+            - right_shoulder_yaw_link
+            - right_elbow_link
+            - left_hip_yaw_link
+            - left_hip_roll_link
+            - left_hip_pitch_link
+            - left_knee_link
+            - left_ankle_pitch_link
+            - left_ankle_roll_link
+            - right_hip_yaw_link
+            - right_hip_roll_link
+            - right_hip_pitch_link
+            - right_knee_link
+            - right_ankle_pitch_link
+            - right_ankle_roll_link
+        randomize_link_mass: true
+        randomize_motion_ref_xyz: false
+        randomize_pd_gain: true
+        randomize_restitution: false
+        randomize_rfi_lim: true
+        randomize_torque_rfi: true
+        rao_lim: 0.05
+        reinit_epis_rand: -1
+        restitution_range:
+            - 0
+            - 1
+        rfi_lim: 0.05
+        rfi_lim_range:
+            - 0.5
+            - 1.5
+        use_rao: true
+env:
+    value:
+        _recursive_: false
+        _target_: humanoidverse.envs.motion_tracking.motion_tracking.LeggedRobotMotionTracking
+        config:
+            ckpt_dir: null
+            domain_rand: ${domain_rand}
+            enforce_randomize_motion_start_eval: false
+            env_spacing: 5
+            experiment_name: ${experiment_name}
+            headless: ${headless}
+            init_noise_scale:
+                dof_pos: 0.1
+                dof_vel: 0.15
+                root_ang_vel: 0.01
+                root_pos: 0.05
+                root_rot: 10
+                root_vel: 0.01
+            max_episode_length_s: 100000
+            noise_to_initial_level: 0
+            normalization:
+                clip_actions: 100
+                clip_observations: 100
+            num_envs: ${num_envs}
+            obs: ${obs}
+            resample_motion_when_training: false
+            resample_time_interval_s: 2000
+            rewards: ${rewards}
+            robot: ${robot}
+            save_rendering_dir: null
+            simulator: ${simulator}
+            soft_dynamic_correction:
+                alpha: 0.1
+                curriculum:
+                    degree: 1e-05
+                    enable: true
+                    level_down_threshold: 40
+                    level_up_threshold: 42
+                    max_alpha: 0.9
+                    min_alpha: 0
+                enable: false
+                type: deter
+            termination:
+                terminate_by_contact: false
+                terminate_by_gravity: true
+                terminate_by_low_height: false
+                terminate_when_close_to_dof_pos_limit: false
+                terminate_when_close_to_dof_vel_limit: false
+                terminate_when_close_to_torque_limit: false
+                terminate_when_dof_far: false
+                terminate_when_motion_end: true
+                terminate_when_motion_far: true
+            termination_curriculum:
+                terminate_when_dof_far_curriculum:
+                    degree: 2e-06
+                    enable: true
+                    init: 3
+                    level_down_threshold: 40
+                    level_up_threshold: 42
+                    max: 3
+                    min: 1
+                terminate_when_motion_far_curriculum: true
+                terminate_when_motion_far_curriculum_degree: 2.5e-05
+                terminate_when_motion_far_curriculum_level_down_threshold: 40
+                terminate_when_motion_far_curriculum_level_up_threshold: 42
+                terminate_when_motion_far_initial_threshold: 1.5
+                terminate_when_motion_far_threshold_max: 2
+                terminate_when_motion_far_threshold_min: 0.3
+            termination_probality:
+                terminate_when_close_to_dof_pos_limit: 0.25
+                terminate_when_close_to_dof_vel_limit: 0.25
+                terminate_when_close_to_torque_limit: 0.25
+            termination_scales:
+                termination_close_to_dof_pos_limit: 0.98
+                termination_close_to_dof_vel_limit: 0.98
+                termination_close_to_torque_limit: 0.98
+                termination_gravity: 0.75
+                termination_gravity_x: 0.8
+                termination_gravity_y: 0.8
+                termination_min_base_height: 0.2
+                termination_motion_far_threshold: 1.5
+            terrain: ${terrain}
+            use_teleop_control: false
+            use_vec_reward: true
+env_spacing:
+    value: 20
+eval_overrides:
+    value:
+        auto_load_latest: false
+        env:
+            config:
+                max_episode_length_s: 100000
+        headless: false
+        num_envs: 1
+        use_wandb: false
+experiment_dir:
+    value: ${base_dir}/${project_name}/${timestamp}-${experiment_name}-${log_task_name}-${robot.asset.robot_type}
+experiment_name:
+    value: 27_07_poses_inter0.5_S0-50_E205-50
+force_flat_terrain:
+    value: false
+headless:
+    value: true
+log_task_name:
+    value: motion_tracking
+num_envs:
+    value: 4096
+obs:
+    value:
+        add_noise_currculum: false
+        motion_len: -1
+        noise_initial_value: 0.05
+        noise_scales:
+            actions: 0
+            base_ang_vel: 0.3
+            base_lin_vel: 0
+            dif_local_rigid_body_pos: 0
+            dof_pos: 0.01
+            dof_vel: 1
+            dr_base_com: 0
+            dr_ctrl_delay: 0
+            dr_friction: 0
+            dr_kd: 0
+            dr_kp: 0
+            dr_link_mass: 0
+            history_actor: 0
+            history_critic: 0
+            local_ref_rigid_body_pos: 0
+            projected_gravity: 0.2
+            ref_motion_phase: 0
+        noise_value_max: 1
+        noise_value_min: 1e-05
+        obs_auxiliary:
+            history_actor:
+                actions: 4
+                base_ang_vel: 4
+                dof_pos: 4
+                dof_vel: 4
+                projected_gravity: 4
+                ref_motion_phase: 4
+            history_critic:
+                actions: 4
+                base_ang_vel: 4
+                base_lin_vel: 4
+                dof_pos: 4
+                dof_vel: 4
+                projected_gravity: 4
+                ref_motion_phase: 4
+        obs_dict:
+            actor_obs:
+                - base_ang_vel
+                - projected_gravity
+                - dof_pos
+                - dof_vel
+                - actions
+                - ref_motion_phase
+                - history_actor
+            critic_obs:
+                - base_lin_vel
+                - base_ang_vel
+                - projected_gravity
+                - dof_pos
+                - dof_vel
+                - actions
+                - ref_motion_phase
+                - dif_local_rigid_body_pos
+                - local_ref_rigid_body_pos
+                - dr_base_com
+                - dr_link_mass
+                - dr_kp
+                - dr_kd
+                - dr_friction
+                - dr_ctrl_delay
+                - history_critic
+        obs_dims:
+            - base_lin_vel: 3
+            - base_ang_vel: 3
+            - projected_gravity: 3
+            - dof_pos: ${robot.dof_obs_size}
+            - dof_vel: ${robot.dof_obs_size}
+            - actions: ${robot.dof_obs_size}
+            - dif_local_rigid_body_pos: ${eval:'3 * ${robot.num_bodies} + 9'}
+            - local_ref_rigid_body_pos: ${eval:'3 * ${robot.num_bodies} + 9'}
+            - ref_motion_phase: 1
+            - dr_base_com: 3
+            - dr_link_mass: 22
+            - dr_kp: ${robot.dof_obs_size}
+            - dr_kd: ${robot.dof_obs_size}
+            - dr_friction: 1
+            - dr_ctrl_delay: 1
+        obs_scales:
+            actions: 1
+            base_ang_vel: 0.25
+            base_lin_vel: 2
+            dif_local_rigid_body_pos: 1
+            dof_pos: 1
+            dof_vel: 0.05
+            dr_base_com: 1
+            dr_ctrl_delay: 1
+            dr_friction: 1
+            dr_kd: 1
+            dr_kp: 1
+            dr_link_mass: 1
+            history_actor: 1
+            history_critic: 1
+            local_ref_rigid_body_pos: 1
+            projected_gravity: 1
+            ref_motion_phase: 1
+        soft_dof_pos_curriculum_degree: 1e-05
+        soft_dof_pos_curriculum_level_down_threshold: 40
+        soft_dof_pos_curriculum_level_up_threshold: 42
+output_dir:
+    value: ${experiment_dir}/output
+project_name:
+    value: MotionTracking
+rewards:
+    value:
+        adaptive_tracking_sigma:
+            alpha: 0.001
+            enable: true
+            scale: 1
+            type: origin
+        desired_feet_air_time: 0.3
+        desired_feet_max_height_for_this_air: 0.2
+        locomotion_max_contact_force: 400
+        num_compute_average_epl: 10000
+        only_positive_rewards: false
+        reward_initial_penalty_scale: 0.1
+        reward_limit:
+            reward_limits_curriculum:
+                soft_dof_pos_curriculum: true
+                soft_dof_pos_curriculum_degree: 2.5e-07
+                soft_dof_pos_curriculum_level_down_threshold: 40
+                soft_dof_pos_curriculum_level_up_threshold: 42
+                soft_dof_pos_initial_limit: 0.95
+                soft_dof_pos_max_limit: 0.95
+                soft_dof_pos_min_limit: 0.95
+                soft_dof_vel_curriculum: true
+                soft_dof_vel_curriculum_degree: 2.5e-07
+                soft_dof_vel_curriculum_level_down_threshold: 40
+                soft_dof_vel_curriculum_level_up_threshold: 42
+                soft_dof_vel_initial_limit: 0.95
+                soft_dof_vel_max_limit: 0.95
+                soft_dof_vel_min_limit: 0.95
+                soft_torque_curriculum: true
+                soft_torque_curriculum_degree: 2.5e-07
+                soft_torque_curriculum_level_down_threshold: 40
+                soft_torque_curriculum_level_up_threshold: 42
+                soft_torque_initial_limit: 0.85
+                soft_torque_max_limit: 0.85
+                soft_torque_min_limit: 0.85
+            soft_dof_pos_limit: 0.9
+            soft_dof_vel_limit: 0.9
+            soft_torque_limit: 0.825
+        reward_max_penalty_scale: 1
+        reward_min_penalty_scale: 0
+        reward_penalty_curriculum: true
+        reward_penalty_degree: 1e-05
+        reward_penalty_level_down_threshold: 40
+        reward_penalty_level_up_threshold: 42
+        reward_penalty_reward_names:
+            - penalty_torques
+            - penalty_dof_acc
+            - penalty_dof_vel
+            - penalty_action_rate
+            - limits_dof_pos
+            - limits_dof_vel
+            - limits_torque
+            - feet_heading_alignment
+            - penalty_feet_ori
+            - penalty_slippage
+            - collision
+        reward_scales:
+            collision: -30
+            feet_air_time: 1
+            limits_dof_pos: -10
+            limits_dof_vel: -5
+            limits_torque: -5
+            penalty_action_rate: -0.5
+            penalty_feet_contact_forces: -0.01
+            penalty_slippage: -1
+            penalty_stumble: -2
+            penalty_torques: -1e-06
+            teleop_body_ang_velocity_extend: 0.5
+            teleop_body_position_extend: 1
+            teleop_body_position_feet: 1.5
+            teleop_body_rotation_extend: 0.5
+            teleop_body_velocity_extend: 0.5
+            teleop_contact_mask: 0.5
+            teleop_joint_position: 1
+            teleop_joint_velocity: 1
+            teleop_max_joint_position: 1
+            teleop_vr_3point: 1.6
+            termination: -200
+        reward_tracking_sigma:
+            teleop_body_ang_vel: 15
+            teleop_body_rot: 0.1
+            teleop_body_vel: 1
+            teleop_feet_pos: 0.01
+            teleop_joint_pos: 0.3
+            teleop_joint_vel: 30
+            teleop_lower_body_pos: 0.015
+            teleop_max_joint_pos: 1
+            teleop_upper_body_pos: 0.015
+            teleop_vr_3point_pos: 0.015
+        set_reward: Weiji
+        set_reward_date: 20250417
+        teleop_body_pos_lowerbody_weight: 1
+        teleop_body_pos_upperbody_weight: 1
+robot:
+    value:
+        actions_dim: 23
+        algo_obs_dim_dict: ???
+        asset:
+            angular_damping: 0
+            armature: 0.001
+            asset_root: description/robots
+            collapse_fixed_joints: true
+            default_dof_drive_mode: 3
+            density: 0.001
+            disable_gravity: null
+            filter_ints: null
+            fix_base_link: false
+            flip_visual_attachments: false
+            linear_damping: 0
+            max_angular_velocity: 1000
+            max_linear_velocity: 1000
+            replace_cylinder_with_capsule: true
+            robot_type: g1_23dof_lock_wrist
+            self_collisions: 0
+            thickness: 0.01
+            urdf_file: g1/${robot.asset.robot_type}.urdf
+            usd_file: g1/${robot.asset.robot_type}.usd
+            xml_file: g1/${robot.asset.robot_type}.xml
+        body_names:
+            - pelvis
+            - left_hip_pitch_link
+            - left_hip_roll_link
+            - left_hip_yaw_link
+            - left_knee_link
+            - left_ankle_pitch_link
+            - left_ankle_roll_link
+            - right_hip_pitch_link
+            - right_hip_roll_link
+            - right_hip_yaw_link
+            - right_knee_link
+            - right_ankle_pitch_link
+            - right_ankle_roll_link
+            - waist_yaw_link
+            - waist_roll_link
+            - torso_link
+            - left_shoulder_pitch_link
+            - left_shoulder_roll_link
+            - left_shoulder_yaw_link
+            - left_elbow_link
+            - right_shoulder_pitch_link
+            - right_shoulder_roll_link
+            - right_shoulder_yaw_link
+            - right_elbow_link
+        contact_bodies:
+            - left_ankle_roll_link
+            - right_ankle_roll_link
+        contact_pairs_multiplier: 16
+        control:
+            action_clip_value: 100
+            action_scale: 0.25
+            clamp_actions: 1
+            clip_torques: true
+            control_type: P
+            damping:
+                ankle_pitch: 2
+                ankle_roll: 2
+                elbow: 2
+                hip_pitch: 2
+                hip_roll: 2
+                hip_yaw: 2
+                knee: 4
+                shoulder_pitch: 2
+                shoulder_roll: 2
+                shoulder_yaw: 2
+                waist_pitch: 5
+                waist_roll: 5
+                waist_yaw: 5
+            isaac_pd_scale: false
+            stiffness:
+                ankle_pitch: 40
+                ankle_roll: 40
+                elbow: 50
+                hip_pitch: 100
+                hip_roll: 100
+                hip_yaw: 100
+                knee: 150
+                shoulder_pitch: 100
+                shoulder_roll: 100
+                shoulder_yaw: 50
+                waist_pitch: 400
+                waist_roll: 400
+                waist_yaw: 400
+        critic_obs_dim: -1
+        dof_armature_list:
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.04
+            - 0.03
+            - 0.03
+            - 0.03
+        dof_effort_limit_list:
+            - 88
+            - 139
+            - 88
+            - 139
+            - 50
+            - 50
+            - 88
+            - 139
+            - 88
+            - 139
+            - 50
+            - 50
+            - 88
+            - 50
+            - 50
+            - 25
+            - 25
+            - 25
+            - 25
+            - 25
+            - 25
+            - 25
+            - 25
+        dof_joint_friction_list:
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+            - 0.03
+        dof_names:
+            - left_hip_pitch_joint
+            - left_hip_roll_joint
+            - left_hip_yaw_joint
+            - left_knee_joint
+            - left_ankle_pitch_joint
+            - left_ankle_roll_joint
+            - right_hip_pitch_joint
+            - right_hip_roll_joint
+            - right_hip_yaw_joint
+            - right_knee_joint
+            - right_ankle_pitch_joint
+            - right_ankle_roll_joint
+            - waist_yaw_joint
+            - waist_roll_joint
+            - waist_pitch_joint
+            - left_shoulder_pitch_joint
+            - left_shoulder_roll_joint
+            - left_shoulder_yaw_joint
+            - left_elbow_joint
+            - right_shoulder_pitch_joint
+            - right_shoulder_roll_joint
+            - right_shoulder_yaw_joint
+            - right_elbow_joint
+        dof_obs_size: 23
+        dof_pos_lower_limit_list:
+            - -2.5307
+            - -0.5236
+            - -2.7576
+            - -0.087267
+            - -0.87267
+            - -0.2618
+            - -2.5307
+            - -2.9671
+            - -2.7576
+            - -0.087267
+            - -0.87267
+            - -0.2618
+            - -2.618
+            - -0.52
+            - -0.52
+            - -3.0892
+            - -1.5882
+            - -2.618
+            - -1.0472
+            - -3.0892
+            - -2.2515
+            - -2.618
+            - -1.0472
+        dof_pos_upper_limit_list:
+            - 2.8798
+            - 2.9671
+            - 2.7576
+            - 2.8798
+            - 0.5236
+            - 0.2618
+            - 2.8798
+            - 0.5236
+            - 2.7576
+            - 2.8798
+            - 0.5236
+            - 0.2618
+            - 2.618
+            - 0.52
+            - 0.52
+            - 2.6704
+            - 2.2515
+            - 2.618
+            - 2.0944
+            - 2.6704
+            - 1.5882
+            - 2.618
+            - 2.0944
+        dof_vel_limit_list:
+            - 32
+            - 20
+            - 32
+            - 20
+            - 37
+            - 37
+            - 32
+            - 20
+            - 32
+            - 20
+            - 37
+            - 37
+            - 32
+            - 37
+            - 37
+            - 37
+            - 37
+            - 37
+            - 37
+            - 37
+            - 37
+            - 37
+            - 37
+        foot_name: ankle_roll_link
+        has_torso: true
+        has_upper_body_dof: true
+        init_state:
+            ang_vel:
+                - 0
+                - 0
+                - 0
+            default_joint_angles:
+                left_ankle_pitch_joint: -0.2
+                left_ankle_roll_joint: 0
+                left_elbow_joint: 0.9
+                left_hip_pitch_joint: -0.1
+                left_hip_roll_joint: 0
+                left_hip_yaw_joint: 0
+                left_knee_joint: 0.3
+                left_shoulder_pitch_joint: 0.2
+                left_shoulder_roll_joint: 0.2
+                left_shoulder_yaw_joint: 0
+                right_ankle_pitch_joint: -0.2
+                right_ankle_roll_joint: 0
+                right_elbow_joint: 0.9
+                right_hip_pitch_joint: -0.1
+                right_hip_roll_joint: 0
+                right_hip_yaw_joint: 0
+                right_knee_joint: 0.3
+                right_shoulder_pitch_joint: 0.2
+                right_shoulder_roll_joint: -0.2
+                right_shoulder_yaw_joint: 0
+                waist_pitch_joint: 0
+                waist_roll_joint: 0
+                waist_yaw_joint: 0
+            lin_vel:
+                - 0
+                - 0
+                - 0
+            pos:
+                - 0
+                - 0
+                - 0.8
+            rot:
+                - 0
+                - 0
+                - 0
+                - 1
+        key_bodies:
+            - left_ankle_roll_link
+            - right_ankle_roll_link
+        knee_name: knee_link
+        left_foot_name: left_ankle_roll_link
+        lower_body_actions_dim: 15
+        lower_dof_names:
+            - left_hip_pitch_joint
+            - left_hip_roll_joint
+            - left_hip_yaw_joint
+            - left_knee_joint
+            - left_ankle_pitch_joint
+            - left_ankle_roll_joint
+            - right_hip_pitch_joint
+            - right_hip_roll_joint
+            - right_hip_yaw_joint
+            - right_knee_joint
+            - right_ankle_pitch_joint
+            - right_ankle_roll_joint
+            - waist_yaw_joint
+            - waist_roll_joint
+            - waist_pitch_joint
+        mimic_small_marker_bodies: null
+        motion:
+            asset:
+                assetFileName: g1_23dof_lock_wrist_fitmotionONLY.xml
+                assetRoot: description/robots/g1/
+            base_link: torso_link
+            bias_offset: false
+            big_ankle: true
+            body_names:
+                - pelvis
+                - left_hip_pitch_link
+                - left_hip_roll_link
+                - left_hip_yaw_link
+                - left_knee_link
+                - left_ankle_pitch_link
+                - left_ankle_roll_link
+                - right_hip_pitch_link
+                - right_hip_roll_link
+                - right_hip_yaw_link
+                - right_knee_link
+                - right_ankle_pitch_link
+                - right_ankle_roll_link
+                - waist_yaw_link
+                - waist_roll_link
+                - torso_link
+                - left_shoulder_pitch_link
+                - left_shoulder_roll_link
+                - left_shoulder_yaw_link
+                - left_elbow_link
+                - right_shoulder_pitch_link
+                - right_shoulder_roll_link
+                - right_shoulder_yaw_link
+                - right_elbow_link
+            box_body: true
+            dof_names:
+                - left_hip_pitch_link
+                - left_hip_roll_link
+                - left_hip_yaw_link
+                - left_knee_link
+                - left_ankle_pitch_link
+                - left_ankle_roll_link
+                - right_hip_pitch_link
+                - right_hip_roll_link
+                - right_hip_yaw_link
+                - right_knee_link
+                - right_ankle_pitch_link
+                - right_ankle_roll_link
+                - waist_yaw_link
+                - waist_roll_link
+                - torso_link
+                - left_shoulder_pitch_link
+                - left_shoulder_roll_link
+                - left_shoulder_yaw_link
+                - left_elbow_link
+                - right_shoulder_pitch_link
+                - right_shoulder_roll_link
+                - right_shoulder_yaw_link
+                - right_elbow_link
+            extend_config:
+                - joint_name: left_hand_link
+                  parent_name: left_elbow_link
+                  pos:
+                    - 0.25
+                    - 0
+                    - 0
+                  rot:
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                - joint_name: right_hand_link
+                  parent_name: right_elbow_link
+                  pos:
+                    - 0.25
+                    - 0
+                    - 0
+                  rot:
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                - joint_name: head_link
+                  parent_name: torso_link
+                  pos:
+                    - 0
+                    - 0
+                    - 0.42
+                  rot:
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+            freeze_hand: false
+            freeze_toe: false
+            has_dof_subset: true
+            has_jt_limit: false
+            has_mesh: false
+            has_self_collision: true
+            has_shape_obs: false
+            has_shape_obs_disc: false
+            has_shape_variation: false
+            has_smpl_pd_offset: false
+            has_upright_start: true
+            hips_link:
+                - left_hip_pitch_link
+                - left_hip_roll_link
+                - left_hip_yaw_link
+                - right_hip_pitch_link
+                - right_hip_roll_link
+                - right_hip_yaw_link
+            humanoid_type: g1_23dof_lock_wrist
+            joint_matches:
+                - - pelvis
+                  - Pelvis
+                - - left_hip_pitch_link
+                  - L_Hip
+                - - left_knee_link
+                  - L_Knee
+                - - left_ankle_roll_link
+                  - L_Ankle
+                - - right_hip_pitch_link
+                  - R_Hip
+                - - right_knee_link
+                  - R_Knee
+                - - right_ankle_roll_link
+                  - R_Ankle
+                - - left_shoulder_roll_link
+                  - L_Shoulder
+                - - left_elbow_link
+                  - L_Elbow
+                - - left_hand_link
+                  - L_Hand
+                - - right_shoulder_roll_link
+                  - R_Shoulder
+                - - right_elbow_link
+                  - R_Elbow
+                - - right_hand_link
+                  - R_Hand
+                - - head_link
+                  - Head
+            left_foot_name: l_foot_roll
+            limb_weight_group:
+                - - left_hip_pitch_link
+                  - left_hip_roll_link
+                  - left_hip_yaw_link
+                  - left_knee_link
+                  - left_ankle_pitch_link
+                  - left_ankle_roll_link
+                - - right_hip_pitch_link
+                  - right_hip_roll_link
+                  - right_hip_yaw_link
+                  - right_knee_link
+                  - right_ankle_pitch_link
+                  - right_ankle_roll_link
+                - - pelvis
+                  - waist_yaw_link
+                  - waist_roll_link
+                  - torso_link
+                - - left_shoulder_pitch_link
+                  - left_shoulder_roll_link
+                  - left_shoulder_yaw_link
+                  - left_elbow_link
+                - - right_shoulder_pitch_link
+                  - right_shoulder_roll_link
+                  - right_shoulder_yaw_link
+                  - right_elbow_link
+            lower_body_link:
+                - pelvis
+                - left_hip_pitch_link
+                - left_hip_roll_link
+                - left_hip_yaw_link
+                - left_knee_link
+                - left_ankle_pitch_link
+                - left_ankle_roll_link
+                - right_hip_pitch_link
+                - right_hip_roll_link
+                - right_hip_yaw_link
+                - right_knee_link
+                - right_ankle_pitch_link
+                - right_ankle_roll_link
+                - waist_yaw_link
+                - waist_roll_link
+                - torso_link
+            masterfoot: false
+            motion_file: smpl_retarget/retargeted_motion_data/mink_g1_cmu/27_07_poses_inter0.5_S0-50_E205-50.pkl
+            motion_lib_type: WJX
+            motion_sym_loss: false
+            motion_tracking_link:
+                - left_hand_link
+                - right_hand_link
+                - head_link
+            nums_extend_bodies: 3
+            pelvis_link: pelvis
+            real_weight: true
+            real_weight_porpotion_boxes: true
+            real_weight_porpotion_capsules: true
+            remove_toe: false
+            right_foot_name: r_foot_roll
+            smpl_pose_modifier:
+                - Pelvis: '[np.pi/2, 0, np.pi/2]'
+                - L_Shoulder: '[0, 0, -np.pi/2]'
+                - R_Shoulder: '[0, 0, np.pi/2]'
+                - L_Elbow: '[0, -np.pi/2, 0]'
+                - R_Elbow: '[0, np.pi/2, 0]'
+            sym_loss_coef: 1
+            upper_body_link:
+                - left_shoulder_pitch_link
+                - left_shoulder_roll_link
+                - left_shoulder_yaw_link
+                - left_elbow_link
+                - right_shoulder_pitch_link
+                - right_shoulder_roll_link
+                - right_shoulder_yaw_link
+                - right_elbow_link
+                - left_hand_link
+                - right_hand_link
+                - head_link
+            visualization:
+                customize_color: true
+                marker_joint_colors:
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0.929
+                      - 0.867
+                      - 0.437
+                    - - 0
+                      - 0.351
+                      - 0.613
+                    - - 0
+                      - 0.351
+                      - 0.613
+                    - - 0
+                      - 0.351
+                      - 0.613
+        num_bodies: 24
+        num_feet: 2
+        num_key_bodies: ${len:${robot.key_bodies}}
+        number_of_actions: ???
+        only_track_leg: ???
+        penalize_contacts_on:
+            - pelvis
+            - shoulder
+            - hip
+            - torso
+            - waist
+            - elbow
+        policy_obs_dim: -1
+        right_foot_name: right_ankle_roll_link
+        self_obs_max_coords: ???
+        terminate_after_contacts_on:
+            - pelvis
+            - shoulder
+            - hip
+        torso_name: torso_link
+        upper_body_actions_dim: 8
+        upper_dof_names:
+            - left_shoulder_pitch_joint
+            - left_shoulder_roll_joint
+            - left_shoulder_yaw_joint
+            - left_elbow_joint
+            - right_shoulder_pitch_joint
+            - right_shoulder_roll_joint
+            - right_shoulder_yaw_joint
+            - right_elbow_joint
+        upper_left_arm_dof_names:
+            - left_shoulder_pitch_joint
+            - left_shoulder_roll_joint
+            - left_shoulder_yaw_joint
+            - left_elbow_joint
+        upper_right_arm_dof_names:
+            - right_shoulder_pitch_joint
+            - right_shoulder_roll_joint
+            - right_shoulder_yaw_joint
+            - right_elbow_joint
+        waist_dof_names:
+            - waist_yaw_joint
+            - waist_roll_joint
+            - waist_pitch_joint
+save_dir:
+    value: ${experiment_dir}/.hydra
+seed:
+    value: 1
+sim_type:
+    value: isaacgym
+simulator:
+    value:
+        _recursive_: false
+        _target_: humanoidverse.simulator.isaacgym.isaacgym.IsaacGym
+        config:
+            name: isaacgym
+            sim:
+                control_decimation: 4
+                fps: 200
+                physx:
+                    bounce_threshold_velocity: 0.5
+                    contact_collection: 2
+                    contact_offset: 0.01
+                    default_buffer_size_multiplier: 5
+                    max_depenetration_velocity: 1
+                    num_position_iterations: 4
+                    num_threads: 4
+                    num_velocity_iterations: 0
+                    rest_offset: 0
+                    solver_type: 1
+                substeps: 1
+            terrain: ${terrain}
+terrain:
+    value:
+        border_size: 40
+        curriculum: false
+        dynamic_friction: 1
+        horizontal_scale: 0.1
+        max_init_terrain_level: 9
+        measure_heights: false
+        measured_points_x:
+            - 0
+        measured_points_y:
+            - 0
+        mesh_type: plane
+        num_cols: 20
+        num_rows: 10
+        restitution: 0
+        selected: false
+        slope_treshold: 0.75
+        static_friction: 1
+        terrain_kwargs: null
+        terrain_length: 8
+        terrain_proportions:
+            - 0.2
+            - 0.6
+            - 0.2
+            - 0
+            - 0
+        terrain_types:
+            - flat
+            - rough
+            - low_obst
+            - smooth_slope
+            - rough_slope
+        terrain_width: 8
+        vertical_scale: 0.005
+timestamp:
+    value: ${now:%Y%m%d_%H%M%S}
+use_wandb:
+    value: true
+wandb:
+    value:
+        wandb_dir: ${experiment_dir}/.wandb
+        wandb_entity: null
+        wandb_group: null
+        wandb_id: null
+        wandb_project: null
+        wandb_tags: online

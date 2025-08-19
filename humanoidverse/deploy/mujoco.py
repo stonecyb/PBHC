@@ -416,7 +416,7 @@ class MujocoRobot(URCIRobot, ViewerPlugin):
         rand_delay = np.random.randint((1e-3*self.delay_ratio[0])//self.sim_dt, (1e-3*self.delay_ratio[1])//self.sim_dt) * self.RAND_DELAY
         step_delay = rand_delay//self.decimation
         substep_delay = rand_delay - step_delay * self.decimation
-        
+        # import ipdb; ipdb.set_trace()
         if step_delay ==0:
             old_action = self.history_handler.history['actions'][0, step_delay]
             old_trg_q = np.clip(old_action, -self.clip_action_limit, self.clip_action_limit) * self.action_scale + self.dof_init_pose
@@ -426,7 +426,7 @@ class MujocoRobot(URCIRobot, ViewerPlugin):
             cur_action = self.history_handler.history['actions'][0, step_delay+1]
             old_trg_q = np.clip(old_action, -self.clip_action_limit, self.clip_action_limit) * self.action_scale + self.dof_init_pose
             cur_trg_q = np.clip(cur_action, -self.clip_action_limit, self.clip_action_limit) * self.action_scale + self.dof_init_pose
-                
+                    
         for i in range(self.decimation):
             self.GetState()
             

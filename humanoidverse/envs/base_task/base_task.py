@@ -176,6 +176,7 @@ class BaseTask():
         for name in self.config.robot.penalize_contacts_on:
             penalized_contact_names.extend([s for s in self.body_names if name in s])
         termination_contact_names = []
+
         for name in self.config.robot.terminate_after_contacts_on:
             termination_contact_names.extend([s for s in self.body_names if name in s])
 

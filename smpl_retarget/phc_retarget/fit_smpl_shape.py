@@ -29,10 +29,11 @@ from easydict import EasyDict
 import hydra
 from omegaconf import DictConfig, OmegaConf
 from tqdm import tqdm
+from torch import nn
 
 @hydra.main(version_base=None, config_path="../../description/robots/cfg", config_name="config")
 def main(cfg : DictConfig) -> None:
-    
+
     # robot_name = "h1"
     humanoid_fk = Humanoid_Batch(cfg.robot) # load forward kinematics model
 
@@ -42,9 +43,11 @@ def main(cfg : DictConfig) -> None:
     robot_joint_names_augment = humanoid_fk.body_names_augment 
     robot_joint_pick = [i[0] for i in cfg.robot.joint_matches]
     smpl_joint_pick = [i[1] for i in cfg.robot.joint_matches]
+    # import ipdb; ipdb.set_trace()
+    print(robot_joint_names_augment)
     robot_joint_pick_idx = [ robot_joint_names_augment.index(j) for j in robot_joint_pick]
     smpl_joint_pick_idx = [SMPL_BONE_ORDER_NAMES.index(j) for j in smpl_joint_pick]
-
+    print(robot_joint_pick_idx)
     #### Preparing fitting varialbes
     device = torch.device("cpu")
     pose_aa_robot = np.repeat(np.repeat(sRot.identity().as_rotvec()[None, None, None, ], humanoid_fk.num_bodies , axis = 2), 1, axis = 1)
@@ -61,7 +64,7 @@ def main(cfg : DictConfig) -> None:
 
     pose_aa_stand = torch.from_numpy(pose_aa_stand.reshape(-1, 72))
     smpl_parser_n = SMPL_Parser(model_path="./smpl_model/smpl", gender="neutral")
-
+    # mask = torch.ones()
     ###### Shape fitting
     trans = torch.zeros([1, 3])
     beta = torch.zeros([1, 10])
@@ -93,7 +96,8 @@ def main(cfg : DictConfig) -> None:
         optimizer_shape.zero_grad()
         loss.backward()
         optimizer_shape.step()
-    if cfg.get("vis", False):
+    # import ipdb; ipdb.set_trace()
+    if cfg.get("vis", True):
         from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
         import matplotlib.pyplot as plt
         
@@ -118,7 +122,7 @@ def main(cfg : DictConfig) -> None:
         plt.show()
 
     os.makedirs(f"./retargeted_motion_data/phc", exist_ok=True)
-    joblib.dump((shape_new.detach(), scale), f"./retargeted_motion_data/phc/shape_optimized_N2.pkl") # V2 has hip joints
+    joblib.dump((shape_new.detach(), scale), f"./retargeted_motion_data/phc/shape_optimized_taihu.pkl") # V2 has hip joints
 
 
 if __name__ == "__main__":

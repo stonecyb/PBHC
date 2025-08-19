@@ -276,7 +276,7 @@
       effort="36"
       velocity="12" />
   </joint>
-  <!-- <link
+  <link
     name="L_arm_hand_Link">
     <inertial>
       <origin
@@ -318,7 +318,7 @@
   </link>
   <joint
     name="L_arm_hand_joint"
-    type="fixed" dont_collapse="true">
+    type="">
     <origin
       xyz="-0.0045 0.00036368 -0.1815"
       rpy="0 0 0" />
@@ -328,7 +328,7 @@
       link="L_arm_hand_Link" />
     <axis
       xyz="0 0 0" />
-  </joint> -->
+  </joint>
   <link
     name="R_arm_shoulder_pitch_Link">
     <inertial>
@@ -561,7 +561,7 @@
       effort="36"
       velocity="12" />
   </joint>
-  <!-- <link
+  <link
     name="R_arm_hand_link">
     <inertial>
       <origin
@@ -603,7 +603,7 @@
   </link>
   <joint
     name="R_arm_hand_joint"
-    type="fixed" dont_collapse="true">
+    type="">
     <origin
       xyz="-0.0045 0.00018648 -0.18067"
       rpy="0 0 0" />
@@ -613,7 +613,7 @@
       link="R_arm_hand_link" />
     <axis
       xyz="0 0 0" />
-  </joint> -->
+  </joint>
   <link
     name="L_leg_hip_yaw_link">
     <inertial>

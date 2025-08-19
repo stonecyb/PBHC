@@ -70,6 +70,8 @@ outputs
 results/
 hydra_logs/
 wandb/
+taihu/
+test/
 # other
 *.egg-info
 __pycache__

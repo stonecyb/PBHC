@@ -10,8 +10,8 @@ from collections import defaultdict
 
 
 import numpy as np
-# import smpl_sim.utils.rotation_conversions as tRot
-import utils.rotation_conversions as tRot
+import smpl_sim.utils.rotation_conversions as tRot
+# import utils.rotation_conversions as tRot
 from scipy.spatial.transform import Rotation as sRot
 import xml.etree.ElementTree as ETree
 from easydict import EasyDict

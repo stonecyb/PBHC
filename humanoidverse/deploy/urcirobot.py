@@ -133,9 +133,10 @@ class URCIRobot:
                     # breakpoint()
                 
                 self.UpdateObs()
-                import ipdb; ipdb.set_trace()
-                action = policy_fn(self.Obs())[0]
                 
+                action = policy_fn(self.Obs())[0]
+                # print(f"action: {action}")
+                # import ipdb; ipdb.set_trace()
                 if self.BYPASS_ACT: action = np.zeros_like(action)
                 
                 if self.SWITCH_EMA and self.timer <10:
@@ -324,13 +325,14 @@ class URCIRobot:
 
         current_yaw = self.rpy[2]
         self.relyaw = current_yaw - self.ref_init_yaw
-        
+        # import ipdb; ipdb.set_trace()
+        N = motion_res["body_vel_t"].shape[1]
         relyaw_heading_inv_quat = calc_yaw_heading_quat_inv(torch.from_numpy(self.relyaw).to(dtype=torch.float32).unsqueeze(0))
-        relyaw_heading_inv_quat_expand = relyaw_heading_inv_quat.unsqueeze(1).expand(-1, 27, -1).reshape(-1, 4)
+        relyaw_heading_inv_quat_expand = relyaw_heading_inv_quat.unsqueeze(1).expand(-1, N, -1).reshape(-1, 4)
 
         heading_inv_rot = calc_heading_quat_inv(torch.from_numpy(self.quat).to(dtype=torch.float32).unsqueeze(0), w_last=True) #xyzw
         # # expand to (B*num_rigid_bodies, 4) for fatser computation in jit
-        heading_inv_rot_expand = heading_inv_rot.unsqueeze(1).expand(-1, 27, -1).reshape(-1, 4)
+        heading_inv_rot_expand = heading_inv_rot.unsqueeze(1).expand(-1, N, -1).reshape(-1, 4)
 
 
         ref_joint_pos = motion_res["dof_pos"] # [num_envs, num_dofs]
@@ -365,7 +367,7 @@ class URCIRobot:
         assert self.cfg is not None or not isinstance(self.cfg, OmegaConf), "cfg is not set"
         
         assert self.num_dofs is not None, "num_dofs is not set"
-        assert self.num_dofs == 23, "In policy level, only 23 dofs are supported for now"
+        # assert self.num_dofs == 23, "In policy level, only 23 dofs are supported for now"
         assert self.kp is not None and type(self.kp) == np.ndarray and self.kp.shape == (self.num_dofs,), "kp is not set"
         assert self.kd is not None and type(self.kd) == np.ndarray and self.kd.shape == (self.num_dofs,), "kd is not set"
         
@@ -385,7 +387,7 @@ class URCIRobot:
         self.dof_names = self.cfg.robot.dof_names
         self.num_bodies = len(self.body_names)
         self.num_dofs = len(self.dof_names)
-        assert self.num_dofs == 23, "Only 23 dofs are supported for now"
+        # assert self.num_dofs == 23, "Only 23 dofs are supported for now"
         
         
         dof_init_pose = cfg_init_state.default_joint_angles
@@ -423,17 +425,17 @@ class URCIRobot:
         
         self.act = np.zeros(self.num_dofs)
         
-        
+        # import ipdb; ipdb.set_trace()
         self.history_handler = HistoryHandler(1, self.cfg.obs.obs_auxiliary, self.cfg.obs.obs_dims, self.device)
-        
+        N = self.cfg.robot.motion.nums_extend_bodies + self.cfg.robot.num_bodies
         self.motion_lib = None
         self.ref_init_yaw = np.zeros(1,dtype=np.float32)
         self.relyaw = np.zeros(1,dtype=np.float32)
         self.dif_joint_angles = torch.zeros(self.num_dofs, dtype=torch.float32)
         self.dif_joint_velocities = torch.zeros(self.num_dofs, dtype=torch.float32)
-        self._obs_global_ref_body_vel = torch.zeros(27*3, dtype=torch.float32)  # 27 rigid bodies, each has 3 velocity components
-        self._obs_local_ref_rigid_body_vel = torch.zeros(27*3, dtype=torch.float32)
-        self._obs_local_ref_rigid_body_pos_relyaw = torch.zeros(27*3, dtype=torch.float32)
+        self._obs_global_ref_body_vel = torch.zeros(N*3, dtype=torch.float32)  # 27 rigid bodies, each has 3 velocity components
+        self._obs_local_ref_rigid_body_vel = torch.zeros(N*3, dtype=torch.float32)
+        self._obs_local_ref_rigid_body_pos_relyaw = torch.zeros(N*3, dtype=torch.float32)
         ...
         
     def _make_motionlib(self, cfg_policies: List[URCIPolicyObs]):
@@ -483,8 +485,8 @@ class URCIRobot:
         logger.info("Save Motion Dir: ", self.save_motion_dir)
         OmegaConf.save(self.cfg, self.save_motion_dir / "config.yaml")
         
-
-        self._dof_axis = np.load('humanoidverse/utils/motion_lib/dof_axis.npy', allow_pickle=True)
+        # import ipdb; ipdb.set_trace()
+        self._dof_axis = np.load(self.cfg.robot.motion.asset.assetRoot + 'dof_axis.npy', allow_pickle=True)
         self._dof_axis = self._dof_axis.astype(np.float32)
 
         self.num_augment_joint = len(self.cfg.robot.motion.extend_config)

@@ -12,7 +12,7 @@ smpl_model = smplx.create(model_path, model_type='smpl', gender='neutral', use_p
 
 # Step 2: 设定Shape参数 (10维)
 # shape_parameters 是您已有的10个shape参数
-betas = joblib.load('/home/cheng/Downloads/PBHC/smpl_retarget/mink_retarget/shape_optimized_neutral_N2.pkl')
+betas = joblib.load('/home/cheng/Downloads/PBHC/smpl_retarget/retargeted_motion_data/phc/shape_optimized_N2_temp.pkl')
 # betas = joblib.load('/home/cheng/Downloads/PBHC/smpl_retarget/retargeted_motion_data/phc/shape_optimized_v1.pkl')
 
 # shape_parameters = np.array([0, 0, 0, 0, -0, 0, -0, 0, -0, 0])
