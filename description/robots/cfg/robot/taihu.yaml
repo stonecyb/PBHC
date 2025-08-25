@@ -123,7 +123,7 @@ left_foot_name: 'L_ANKLE_R'
 
 asset:
   assetRoot: "./"
-  assetFileName: "/home/cheng/Downloads/PBHC/description/robots/taihu/mjcf/mjmodel_mink.xml"
+  assetFileName: "/home/cheng/Downloads/PBHC/description/robots/taihu/mjcf/mjmodel.xml"
   urdfFileName: "/home/cheng/Downloads/PBHC/description/robots/taihu/urdf/update_T170-V21.urdf"
 
 extend_config:

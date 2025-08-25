@@ -157,13 +157,13 @@ def taihu_mapping():
                 {
             "joint_name": "left_toe_link",
             "parent_name": "L_ANKLE_R_S",
-            "pos": [0.08, 0., -0.03],
+            "pos": [0.06, 0., -0.02],
             "rot": [1.0, 0.0, 0.0, 0.0],
         },
         {
             "joint_name": "right_toe_link",
             "parent_name": "R_ANKLE_R_S",
-            "pos": [0.08, 0., -0.03],
+            "pos": [0.06, 0., -0.02],
             "rot": [1.0, 0.0, 0.0, 0.0],
         },
         
@@ -189,13 +189,13 @@ def taihu_mapping():
         ["R_WRIST_Y_S", "R_Hand"],
 
         ["NECK_Y_S", "Neck"],
-        ["head_link", "Head"]
+        ["head", "Head"]
     ]
     smpl_pose_modifier = [
         {"Pelvis": "[np.pi/2, 0, np.pi/2]"}
     ]
 
-    asset_file = "../description/robots/taihu/mjcf/mjmodel_back.xml"
+    asset_file = "../description/robots/taihu/mjcf/mjmodel.xml"
     return EasyDict(
         extend_config=extend_config,
         base_link=base_link,

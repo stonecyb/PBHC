@@ -431,9 +431,9 @@ def main(
 
                     print("Force retargeting motion using mink retargeter...")
                     # Convert to 30 fps to speedup Mink retargeting
-                    skip = int(mocap_fr // 30)
+                    skip = int(1)
 
-                    fps = 30
+                    fps = mocap_fr
                     feet_l , feet_r = foot_detect(origin_global_trans[::skip])
                     contact_mask = np.concatenate([feet_l,feet_r],axis=-1)
                     

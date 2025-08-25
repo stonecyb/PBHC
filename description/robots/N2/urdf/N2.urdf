@@ -318,7 +318,7 @@
   </link>
   <joint
     name="L_arm_hand_joint"
-    type="">
+    type="fixed">
     <origin
       xyz="-0.0045 0.00036368 -0.1815"
       rpy="0 0 0" />
@@ -603,7 +603,7 @@
   </link>
   <joint
     name="R_arm_hand_joint"
-    type="">
+    type="fixed">
     <origin
       xyz="-0.0045 0.00018648 -0.18067"
       rpy="0 0 0" />

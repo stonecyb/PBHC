@@ -144,8 +144,8 @@ _taihu_KEYPOINT_TO_JOINT = {
     "R_Shoulder": {"name": "R_SHOULDER_P_S", "weight": 3.0},
 
     # toe
-    'L_Toe': {'name': 'left_toe_link', 'weight': 1.0},
-    'R_Toe': {'name': 'right_toe_link', 'weight': 1.0},
+    # 'L_Toe': {'name': 'left_toe_link', 'weight': 1.0},
+    # 'R_Toe': {'name': 'right_toe_link', 'weight': 1.0},
 
 }
 _KEYPOINT_TO_JOINT_MAP = {
@@ -289,7 +289,7 @@ def construct_model(robot_name: str, keypoint_names: Sequence[str]):
         humanoid_mjcf = mjcf.from_path("../description/robots/N2/mjcf/N2_mink.xml")
         # import ipdb; ipdb.set_trace()
     elif robot_name == "taihu":
-        humanoid_mjcf = mjcf.from_path("../description/robots/taihu/mjcf/mjmodel.xml")
+        humanoid_mjcf = mjcf.from_path("../description/robots/taihu/mjcf/mjmodel_mink.xml")
     else:
         raise ValueError(f"Unknown robot name: {robot_name}")
     humanoid_mjcf.worldbody.add(

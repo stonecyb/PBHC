@@ -76,14 +76,14 @@ robot:
     default_joint_angles :  # : target angles [rad] when action : 0.0
       L_leg_hip_yaw_joint : 0. 
       L_leg_hip_roll_joint : 0            
-      L_leg_hip_pitch_joint : -0.16    
-      L_leg_knee_joint : 0.36    
-      L_leg_ankle_joint : -0.2
+      L_leg_hip_pitch_joint : -0.1495    
+      L_leg_knee_joint : 0.3215    
+      L_leg_ankle_joint : -0.1720
       R_leg_hip_yaw_joint : 0. 
       R_leg_hip_roll_joint : 0 
-      R_leg_hip_pitch_joint : -0.16
-      R_leg_knee_joint : 0.36
-      R_leg_ankle_joint : -0.2
+      R_leg_hip_pitch_joint : -0.1495 
+      R_leg_knee_joint : 0.3215 
+      R_leg_ankle_joint : -0.1720
       # torso_joint : 0. 
       L_arm_shoulder_pitch_joint : 0. 
       L_arm_shoulder_roll_joint : 0.3
@@ -113,7 +113,7 @@ robot:
       ankle: 20
       shoulder_pitch: 18
       shoulder_roll: 18
-      shoulder_yaw: 4
+      shoulder_yaw: 10
       elbow: 18
       # hip_yaw: 60
       # hip_roll: 60
@@ -136,7 +136,7 @@ robot:
       ankle: 1.
       shoulder_pitch: 2.0
       shoulder_roll: 2.0
-      shoulder_yaw: 0.2
+      shoulder_yaw: 2.0
       elbow: 2.0
 
     # action scale: target angle = actionScale * action + defaultAngle
