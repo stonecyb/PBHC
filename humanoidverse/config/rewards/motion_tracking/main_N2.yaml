@@ -20,7 +20,7 @@ rewards:
       teleop_body_rotation_extend: 0.5
       teleop_body_ang_velocity_extend: 0.5
       teleop_body_velocity_extend: 0.5
-      teleop_joint_position: 5 # 1.0
+      teleop_joint_position: 1.0 # 1.0
       teleop_joint_velocity: 1.0
       penalty_torques: -0.000001
       # penalty_dof_vel: -0.0001
@@ -40,7 +40,7 @@ rewards:
       collision: -30.0 # -30
       
 
-  teleop_body_pos_lowerbody_weight : 2.0 # 1.0
+  teleop_body_pos_lowerbody_weight : 1.0 # 1.0
   teleop_body_pos_upperbody_weight : 1.0
 
   desired_feet_max_height_for_this_air: 0.2 # 0.2     

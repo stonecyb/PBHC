@@ -380,7 +380,7 @@
     <child
       link="R_arm_shoulder_pitch_Link" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
       lower="-2.7"
       upper="2.7"

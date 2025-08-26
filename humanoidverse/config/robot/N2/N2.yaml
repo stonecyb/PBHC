@@ -113,7 +113,7 @@ robot:
       ankle: 20
       shoulder_pitch: 18
       shoulder_roll: 18
-      shoulder_yaw: 10
+      shoulder_yaw: 4
       elbow: 18
       # hip_yaw: 60
       # hip_roll: 60
@@ -136,7 +136,7 @@ robot:
       ankle: 1.
       shoulder_pitch: 2.0
       shoulder_roll: 2.0
-      shoulder_yaw: 2.0
+      shoulder_yaw: 0.2
       elbow: 2.0
 
     # action scale: target angle = actionScale * action + defaultAngle
